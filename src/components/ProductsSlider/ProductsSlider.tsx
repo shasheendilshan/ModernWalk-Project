@@ -48,8 +48,8 @@ const ProductsSlider:React.FC<Props> = ({products}) => {
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 2000,
-    nextArrow: <NextArrow onClick={()=>{}}/>,
-    prevArrow: <PreviousArrow onClick={()=>{}} />,
+    nextArrow: <NextArrow />,
+    prevArrow: <PreviousArrow/>,
   };
 
 
