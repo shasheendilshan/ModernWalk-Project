@@ -17,7 +17,7 @@ const FlashSales:React.FC = () => {
     setLoading(true);
     const fetchData = async () => {
       const productsData = await getAllProducts();
-      setFlashSaleProducts(productsData.data?.filter((product:IProduct) =>
+      setFlashSaleProducts(productsData?.data.filter((product:IProduct) =>
       product.category === "men's clothing" ||
       product.category === "women's clothing"));
       setLoading(false);
@@ -25,7 +25,6 @@ const FlashSales:React.FC = () => {
 
     fetchData();
   }, [setFlashSaleProducts]);
-
 
   if (loading) {
     return (
