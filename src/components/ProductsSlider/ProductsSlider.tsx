@@ -56,7 +56,7 @@ const ProductsSlider:React.FC<Props> = ({products}) => {
   return (
     <div className=" py-2 container">
       <Slider {...settings}>
-        {products.map((product, index) => {
+        {products?.map((product, index) => {
           return <ProductCard key={index} product={product} />;
         })}
       </Slider>

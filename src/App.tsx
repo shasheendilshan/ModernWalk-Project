@@ -1,14 +1,19 @@
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
-import './App.css';
+import { Navbar } from './components';
+import { Home } from "./page-templates";
 
 
 const App=()=> {
 
 
   return (
-    <div className="App">
-       <h1 className='font-bold text-3xl'>ModernWalk</h1>
-    </div>
+   <BrowserRouter>
+    <Navbar/>
+    <Routes>
+    <Route path="/" element={<Home />} />
+    </Routes>
+   </BrowserRouter>
   );
 }
 
