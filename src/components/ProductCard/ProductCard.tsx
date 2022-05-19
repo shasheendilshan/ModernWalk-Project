@@ -1,6 +1,6 @@
 import React from 'react'
+
 import { IProduct } from './../../interfaces/index';
-import { useNavigate } from "react-router-dom";
 
 type Props = {
   product:IProduct
@@ -8,12 +8,12 @@ type Props = {
 
 const ProductCard:React.FC<Props> = ({product}) => {
 
-  const navigate = useNavigate();
+
 
   return (
     <div
       className="h-full w-72 bg-white flex flex-col mx-auto items-center  rounded-lg drop-shadow-2xl pt-2 cursor-pointer scale-90 hover:scale-100 transition duration-300 ease-linear"
-      onClick={() => navigate(`/products/${product.id}`)}
+     
     >
       <div className="w-full p-2 h-24 overflow-hidden">
         <h3 className="text-lg font-semibold text-center">
@@ -40,7 +40,6 @@ const ProductCard:React.FC<Props> = ({product}) => {
         </h3>
 
         <p className=" text-xs md:text-sm text-center text-zinc-900">
-          {/* {product.description.split(" ").filter((n) => n !== "").length} */}
           {product.description.substring(0, 100) + "......"}
         </p>
       </div>
