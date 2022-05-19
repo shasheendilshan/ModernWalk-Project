@@ -1,12 +1,14 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src",
+    "baseUrl": ".",
 
     "paths": {
-      "@section-templates/*": ["section-templates/*"],
-      "@page-templates/*": ["page-templates/*"],
-      "@components/*": ["components/*"],
-      "@interfaces/*": ["interfaces/*"],
+      "@section-templates/*": ["./src/section-templates/*"],
+      "@page-templates/*": ["./src/page-templates/*"],
+      "@components/*": ["./src/components/*"],
+      "@interfaces/*": ["./src/interfaces/*"],
+     
+      
     },
 
     "target": "es5",
