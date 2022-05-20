@@ -1,6 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
+
+import { getUser } from "../../api/users";
 
 const SignIn: React.FC = () => {
+  const [userData, setUserData] = useState({ email: "", password: "" });
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (validate()) {
+      const response = await getUser(userData);
+      if (response?.data.length === 1) {
+        console.log("login successful");
+      } else {
+        console.log("invalid email or password");
+      }
+    } else {
+      console.log("Validation failed");
+    }
+  };
+
+  const validate = () => {
+    if (userData.email === "" || userData.password === "") {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
   return (
     <div className="mt-[70px]  min-h-screen flex flex-col item-center">
       <div className="max-w-md w-full mx-auto mt-4 bg-white p-8 border border-gray-300">
@@ -9,7 +35,7 @@ const SignIn: React.FC = () => {
             Sign In
           </div>
         </div>
-        <form action="" className="space-y-4">
+        <form onSubmit={(e) => handleSubmit(e)} className="space-y-4">
           <div>
             <label htmlFor="" className="text-sm font-bold text-gray-600 block">
               Email
@@ -18,6 +44,9 @@ const SignIn: React.FC = () => {
               name="email"
               type="text"
               className="w-full p-2 border border-gray-300 mt-1 rounded-sm focus:outline-none"
+              onChange={(e) =>
+                setUserData({ ...userData, email: e.target.value })
+              }
             />
           </div>
           <div>
@@ -28,6 +57,9 @@ const SignIn: React.FC = () => {
               name="email"
               type="password"
               className="w-full p-2 border border-gray-300 mt-1 rounded-sm  focus:outline-none"
+              onChange={(e) =>
+                setUserData({ ...userData, password: e.target.value })
+              }
             />
           </div>
           <div className="flex items-center justify-between">
