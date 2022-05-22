@@ -1,5 +1,5 @@
 import axios from "axios";
-import { IProduct } from './../interfaces/index';
+import { IProduct } from '../interfaces/product';
 
 type Response = {
   data:IProduct[],

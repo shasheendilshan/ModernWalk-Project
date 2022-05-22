@@ -4,22 +4,24 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 import { ProductsSlider } from "../../components";
-import { IProduct } from './../../interfaces/index';
-import { getAllProducts } from './../../api/index';
+import { IProduct } from "../../interfaces/product";
+import { getAllProducts } from "../../api/products";
 
-
-const FlashSales:React.FC = () => {
-
+const FlashSales: React.FC = () => {
   const [flashSaleProducts, setFlashSaleProducts] = useState<IProduct[]>([]);
   const [loading, setLoading] = useState<Boolean>(true);
- 
+
   useEffect(() => {
     setLoading(true);
     const fetchData = async () => {
       const productsData = await getAllProducts();
-      setFlashSaleProducts(productsData?.data.filter((product:IProduct) =>
-      product.category === "men's clothing" ||
-      product.category === "women's clothing"));
+      setFlashSaleProducts(
+        productsData?.data.filter(
+          (product: IProduct) =>
+            product.category === "men's clothing" ||
+            product.category === "women's clothing"
+        )
+      );
       setLoading(false);
     };
 
@@ -62,8 +64,6 @@ const FlashSales:React.FC = () => {
       </div>
     );
   }
+};
 
- 
-}
-
-export default FlashSales
+export default FlashSales;

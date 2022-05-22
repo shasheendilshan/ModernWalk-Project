@@ -1,20 +1,14 @@
-import React from 'react'
+import React from "react";
 
-import { IProduct } from './../../interfaces/index';
+import { IProduct } from "../../interfaces/product";
 
 type Props = {
-  product:IProduct
-}
+  product: IProduct;
+};
 
-const ProductCard:React.FC<Props> = ({product}) => {
-
-
-
+const ProductCard: React.FC<Props> = ({ product }) => {
   return (
-    <div
-      className="h-full w-72 bg-white flex flex-col mx-auto items-center  rounded-lg drop-shadow-2xl pt-2 cursor-pointer scale-90 hover:scale-100 transition duration-300 ease-linear"
-     
-    >
+    <div className="h-full w-72 bg-white flex flex-col mx-auto items-center  rounded-lg drop-shadow-2xl pt-2 cursor-pointer scale-90 hover:scale-100 transition duration-300 ease-linear">
       <div className="w-full p-2 h-24 overflow-hidden">
         <h3 className="text-lg font-semibold text-center">
           {product.title.substring(0, 100)}
@@ -44,7 +38,7 @@ const ProductCard:React.FC<Props> = ({product}) => {
         </p>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ProductCard
+export default ProductCard;

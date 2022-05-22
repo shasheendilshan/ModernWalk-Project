@@ -3,17 +3,16 @@ import Skeleton from "react-loading-skeleton";
 import { BallBeat } from "react-pure-loaders";
 import "react-loading-skeleton/dist/skeleton.css";
 
-import { getSpecificCategory } from "../../api";
+import { getSpecificCategory } from "../../api/products";
 import { ProductCard } from "../../components";
-import { IProduct } from './../../interfaces/index';
+import { IProduct } from "../../interfaces/product";
 
-type Props ={
-  category:string,
-  title:string
-}
+type Props = {
+  category: string;
+  title: string;
+};
 
-const Category:React.FC<Props> = ({category,title}) => {
-
+const Category: React.FC<Props> = ({ category, title }) => {
   const [products, setProducts] = useState<IProduct[]>([]);
   const [loading, setLoading] = useState<Boolean>(true);
 
@@ -73,6 +72,6 @@ const Category:React.FC<Props> = ({category,title}) => {
       </div>
     );
   }
-}
+};
 
-export default Category
+export default Category;
