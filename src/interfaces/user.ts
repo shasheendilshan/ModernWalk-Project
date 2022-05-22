@@ -6,3 +6,11 @@ export interface IUser{
   password?:string
 
 }
+
+export interface IUserContext{
+ 
+  user:IUser|null,
+  setUserDetails:(user:IUser)=>void,
+  removeUserDetails:()=>void
+
+}
