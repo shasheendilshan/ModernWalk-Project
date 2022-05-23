@@ -1,9 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { getUser } from "../../api/users";
+import { UserContext } from "./../../context/userContext";
+import { IUserContext } from "./../../interfaces/user";
+import { toast } from "react-toastify";
 
 const SignIn: React.FC = () => {
   const [userData, setUserData] = useState({ email: "", password: "" });
+  const { setUserDetails } = useContext(UserContext) as IUserContext;
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -11,11 +17,13 @@ const SignIn: React.FC = () => {
       const response = await getUser(userData);
       if (response?.data.length === 1) {
         console.log("login successful");
+        setUserDetails(response.data[0]);
+        navigate("/");
       } else {
-        console.log("invalid email or password");
+        toast.error("Invalid email or password");
       }
     } else {
-      console.log("Validation failed");
+      toast.error("Fill all required fields");
     }
   };
 
@@ -47,6 +55,7 @@ const SignIn: React.FC = () => {
               onChange={(e) =>
                 setUserData({ ...userData, email: e.target.value })
               }
+              value={userData.email}
             />
           </div>
           <div>
@@ -60,6 +69,7 @@ const SignIn: React.FC = () => {
               onChange={(e) =>
                 setUserData({ ...userData, password: e.target.value })
               }
+              value={userData.password}
             />
           </div>
           <div className="flex items-center justify-between">
@@ -73,8 +83,23 @@ const SignIn: React.FC = () => {
               Forgot Password?
             </p>
           </div>
+          <div className="flex items-center justify-center pt-4">
+            <div className="flex items-center justify-center">
+              <label htmlFor="" className="ml-2 text-sm text-gray-600">
+                Not yet register?
+              </label>
+              <p
+                className="font-medium text-md ml-2 text-blue-500 cursor-pointer"
+                onClick={() => {
+                  navigate("/sign-up");
+                }}
+              >
+                Create an account.
+              </p>
+            </div>
+          </div>
           <div>
-            <button className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 rounded-md text-white font-bold">
+            <button className="w-full py-2 px-4 bg-[#2BD9AF] hover:bg-[#27c39e]  rounded-3xl text-white font-bold">
               Sign In
             </button>
           </div>

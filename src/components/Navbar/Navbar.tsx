@@ -1,16 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { AiOutlineShopping } from "react-icons/ai";
-import { IUser } from "./../../interfaces/user";
+import { AiOutlineShopping, AiOutlineLogout } from "react-icons/ai";
+
+import { IUserContext } from "./../../interfaces/user";
+import { UserContext } from "./../../context/userContext";
 
 const Navbar: React.FC = () => {
-  const user_1: IUser = {
-    firstName: "shasheen",
-    lastName: "dilshan",
-    email: "shasheendilshan@gmail.com",
-  };
-
-  const [user, setUser] = useState<IUser | null>(user_1);
+  const { user, removeUserDetails } = useContext(UserContext) as IUserContext;
 
   return (
     <div className="w-[100%] h-[70px] z-20 bg-white drop-shadow-lg fixed flex items-center top-0">
@@ -26,13 +22,8 @@ const Navbar: React.FC = () => {
           {user === null ? (
             <>
               <Link to="/sign-in">
-                <button className="bg-blue-500 h-[40px] hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">
+                <button className=" h-[40px] bg-[#2BD9AF] hover:bg-[#27c39e] text-white font-bold py-1 px-5 rounded-3xl">
                   Sign in
-                </button>
-              </Link>
-              <Link to="/sign-up">
-                <button className="bg-blue-500 h-[40px] hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">
-                  Sign up
                 </button>
               </Link>
             </>
@@ -41,19 +32,21 @@ const Navbar: React.FC = () => {
               <div className="items-center px-2 group inline-block relative cursor-pointer">
                 <div className="flex items-center space-x-2">
                   <span className="bg-gray-300 text-blue-700 h-[35px] w-[35px] flex items-center justify-center rounded-full">
-                    <h2 className="text-2xl mb-[6px]">
-                      {user?.firstName?.charAt(0)}
-                    </h2>
+                    <h2 className="text-xl ">{user?.firstName?.charAt(0)}</h2>
                   </span>
                   <h3 className="text-md lg:text-xl">
                     Welcome {user?.firstName} !
                   </h3>
                 </div>
 
-                <ul className="absolute w-[150px] text-gray-700 pt-1 hidden group-hover:block">
-                  <li>
+                <ul className="absolute w-[150px] h-[100px] text-gray-700 pt-1  p-2 rounded-md shadow-lg hidden group-hover:block bg-white">
+                  <li
+                    onClick={removeUserDetails}
+                    className="flex items-center rounded-sm justify-center hover:bg-[#27c39e] "
+                  >
+                    <AiOutlineLogout size={25} />
                     <a
-                      className="rounded bg-gray-200 hover:bg-blue-400 py-2 px-4 block whitespace-no-wrap"
+                      className="rounded  py-2 px-2 block whitespace-no-wrap"
                       href="/"
                     >
                       log out
@@ -61,10 +54,6 @@ const Navbar: React.FC = () => {
                   </li>
                 </ul>
               </div>
-
-              {/* <button className="bg-blue-500 h-[40px] my-auto hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">
-                logout
-              </button> */}
             </div>
           )}
           <div className=" relative cursor-pointer ">

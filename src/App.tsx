@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 import { Navbar } from "./components";
 import AuthProvider from "./context/userContext";
@@ -9,6 +10,7 @@ const App = () => {
     <AuthProvider>
       <BrowserRouter>
         <Navbar />
+        <ToastContainer />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/sign-up" element={<SignUp />} />

@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import { createUser } from "./../../api/users";
 import { IUser } from "./../../interfaces/user";
@@ -11,14 +13,22 @@ const SignUp: React.FC = () => {
     password: "",
   });
 
+  const navigate = useNavigate();
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (validate()) {
       const response = await createUser(userData);
-      console.log("User Created successfully");
+      if (response?.status === 201) {
+        console.log("User Created successfully", response?.status);
+        clearFields();
+        navigate("/sign-in");
+      } else {
+        toast.error("Something went wrong");
+      }
     } else {
       console.log("User Created Fail");
+      toast.error("Fill all required fields");
     }
   };
 
@@ -35,11 +45,20 @@ const SignUp: React.FC = () => {
     }
   };
 
+  const clearFields = () => {
+    setUserData({
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+    });
+  };
+
   return (
     <div className="mt-[70px]  min-h-screen flex flex-col item-center">
       <div className="max-w-md w-full mx-auto mt-4 bg-white p-8 border border-gray-300">
         <div className="max-w-md w-full mx-auto mb-5">
-          <div className="text-2xl font-bold text-gray-800 mt-2 text-center">
+          <div className="text-3xl font-bold text-gray-800 mt-2 text-center">
             Sign Up
           </div>
         </div>
@@ -54,6 +73,7 @@ const SignUp: React.FC = () => {
               onChange={(e) =>
                 setUserData({ ...userData, firstName: e.target.value })
               }
+              value={userData.firstName}
               className="w-full p-2 border border-gray-300 mt-1 rounded-sm  focus:outline-none"
             />
           </div>
@@ -68,6 +88,7 @@ const SignUp: React.FC = () => {
               onChange={(e) =>
                 setUserData({ ...userData, lastName: e.target.value })
               }
+              value={userData.lastName}
             />
           </div>
           <div>
@@ -81,6 +102,7 @@ const SignUp: React.FC = () => {
               onChange={(e) =>
                 setUserData({ ...userData, email: e.target.value })
               }
+              value={userData.email}
             />
           </div>
           <div>
@@ -94,13 +116,29 @@ const SignUp: React.FC = () => {
               onChange={(e) =>
                 setUserData({ ...userData, password: e.target.value })
               }
+              value={userData.password}
             />
+          </div>
+          <div className="flex items-center justify-center pt-4">
+            <div className="flex items-center justify-center">
+              <label htmlFor="" className="ml-2 text-sm text-gray-600">
+                Do you have an account?
+              </label>
+              <p
+                className="font-medium text-md text-blue-500 cursor-pointer ml-2"
+                onClick={() => {
+                  navigate("/sign-in");
+                }}
+              >
+                Sign in
+              </p>
+            </div>
           </div>
 
           <div>
             <button
               disabled={false}
-              className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 rounded-md text-white font-bold disabled:bg-slate-400"
+              className="w-full py-2 px-4 bg-[#2BD9AF] hover:bg-[#27c39e]  rounded-3xl text-white font-bold disabled:bg-slate-400"
             >
               Sign Up
             </button>
