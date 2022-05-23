@@ -26,7 +26,7 @@ const FlashSales: React.FC = () => {
     };
 
     fetchData();
-  }, [setFlashSaleProducts]);
+  }, []);
 
   if (loading) {
     return (
