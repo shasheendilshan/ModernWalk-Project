@@ -5,6 +5,7 @@ import { getUser } from "../../api/users";
 import { UserContext } from "./../../context/userContext";
 import { IUserContext } from "./../../interfaces/user";
 import { toast } from "react-toastify";
+import { setUserInLocalStorage } from "../../lib/helpers";
 
 const SignIn: React.FC = () => {
   const [userData, setUserData] = useState({ email: "", password: "" });
@@ -18,6 +19,7 @@ const SignIn: React.FC = () => {
       if (response?.data.length === 1) {
         console.log("login successful");
         setUserDetails(response.data[0]);
+        setUserInLocalStorage(response.data[0]);
         navigate("/");
       } else {
         toast.error("Invalid email or password");
