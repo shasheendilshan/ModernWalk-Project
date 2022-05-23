@@ -1,20 +1,27 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { getUser } from "../../api/users";
 import { UserContext } from "./../../context/userContext";
-import { IUserContext } from "./../../interfaces/user";
+import { IUserContext, IUser } from "./../../interfaces/user";
 import { toast } from "react-toastify";
 import { setUserInLocalStorage } from "../../lib/helpers";
+import { Button, Input } from "../../components";
 
 const SignIn: React.FC = () => {
-  const [userData, setUserData] = useState({ email: "", password: "" });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const { setUserDetails } = useContext(UserContext) as IUserContext;
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (validate()) {
+      const userData: IUser = {
+        email,
+        password,
+      };
       const response = await getUser(userData);
       if (response?.data.length === 1) {
         console.log("login successful");
@@ -30,12 +37,23 @@ const SignIn: React.FC = () => {
   };
 
   const validate = () => {
-    if (userData.email === "" || userData.password === "") {
+    if (email === "" || password === "") {
       return false;
     } else {
       return true;
     }
   };
+
+  const handleEmail = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+  }, []);
+
+  const handlePassword = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setPassword(e.target.value);
+    },
+    []
+  );
 
   return (
     <div className="mt-[70px]  min-h-screen flex flex-col item-center">
@@ -46,34 +64,22 @@ const SignIn: React.FC = () => {
           </div>
         </div>
         <form onSubmit={(e) => handleSubmit(e)} className="space-y-4">
-          <div>
-            <label htmlFor="" className="text-sm font-bold text-gray-600 block">
-              Email
-            </label>
-            <input
-              name="email"
-              type="text"
-              className="w-full p-2 border border-gray-300 mt-1 rounded-sm focus:outline-none"
-              onChange={(e) =>
-                setUserData({ ...userData, email: e.target.value })
-              }
-              value={userData.email}
-            />
-          </div>
-          <div>
-            <label htmlFor="" className="text-sm font-bold text-gray-600 block">
-              Password
-            </label>
-            <input
-              name="email"
-              type="password"
-              className="w-full p-2 border border-gray-300 mt-1 rounded-sm  focus:outline-none"
-              onChange={(e) =>
-                setUserData({ ...userData, password: e.target.value })
-              }
-              value={userData.password}
-            />
-          </div>
+          <Input
+            name="email"
+            type="text"
+            label="Email"
+            onChange={handleEmail}
+            value={email}
+          />
+
+          <Input
+            name="password"
+            type="password"
+            label="Password"
+            onChange={handlePassword}
+            value={password}
+          />
+
           <div className="flex items-center justify-between">
             <div className="flex items-center">
               <input type="checkbox" className="h-4 w-4 rounded " />
@@ -101,9 +107,7 @@ const SignIn: React.FC = () => {
             </div>
           </div>
           <div>
-            <button className="w-full py-2 px-4 bg-[#2BD9AF] hover:bg-[#27c39e]  rounded-3xl text-white font-bold">
-              Sign In
-            </button>
+            <Button name="Sign In" />
           </div>
         </form>
       </div>
