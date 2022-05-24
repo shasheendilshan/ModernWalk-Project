@@ -7,6 +7,7 @@ type Props = {
 };
 
 const ProductCard: React.FC<Props> = ({ product }) => {
+  console.log("productCard rendered");
   return (
     <div className="h-full w-72 bg-white flex flex-col mx-auto items-center  rounded-lg drop-shadow-2xl pt-2 cursor-pointer scale-90 hover:scale-100 transition duration-300 ease-linear">
       <div className="w-full p-2 h-24 overflow-hidden">
@@ -41,4 +42,4 @@ const ProductCard: React.FC<Props> = ({ product }) => {
   );
 };
 
-export default ProductCard;
+export default React.memo(ProductCard);

@@ -1,11 +1,5 @@
 import axios from "axios";
-import { IProduct } from '../interfaces/product';
-
-type Response = {
-  data:IProduct[],
-  error:string| null
-}
-
+import {IProductsResponse } from '../interfaces/product';
 
 export const getAllProducts = async () => {
     try {
@@ -13,16 +7,16 @@ export const getAllProducts = async () => {
         "https://fakestoreapi.com/products?limit=18"
       );
 
-      const Response:Response = {
+      const Response:IProductsResponse = {
         data: allProducts.data,
         error: null
       }   
       return Response;
     } catch (error:any) {
       console.log(error.response);
-      const Response:Response = {
+      const Response:IProductsResponse = {
         data: [],
-        error: null
+        error: error.message
       }  
       return Response;
     }
@@ -36,16 +30,16 @@ export const getAllProducts = async () => {
         }`
       );
 
-     const Response:Response = {
+     const Response:IProductsResponse = {
         data: allProducts.data,
         error: null
       }   
       return Response;
     } catch (error:any) {
       console.log(error.response);
-      const Response:Response = {
+      const Response:IProductsResponse = {
         data: [],
-        error: null
+        error: error.message
       }  
       return Response;
     }

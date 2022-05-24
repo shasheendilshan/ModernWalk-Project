@@ -3,16 +3,14 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import ProductCard from "./../ProductCard/ProductCard";
 import NextArrow from "./NextArrow";
 import PreviousArrow from "./PreviousArrow";
-import { IProduct } from "../../interfaces/product";
 
 type Props = {
-  products: IProduct[];
+  children: React.ReactNode;
 };
 
-const ProductsSlider: React.FC<Props> = ({ products }) => {
+const ProductsSlider: React.FC<Props> = ({ children }) => {
   const settings = {
     dots: false,
     infinite: true,
@@ -53,13 +51,9 @@ const ProductsSlider: React.FC<Props> = ({ products }) => {
 
   return (
     <div className=" py-2 container">
-      <Slider {...settings}>
-        {products?.map((product, index) => {
-          return <ProductCard key={index} product={product} />;
-        })}
-      </Slider>
+      <Slider {...settings}>{children}</Slider>
     </div>
   );
 };
 
-export default ProductsSlider;
+export default React.memo(ProductsSlider);

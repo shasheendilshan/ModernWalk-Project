@@ -5,7 +5,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 import { getSpecificCategory } from "../../api/products";
 import { ProductCard } from "../../components";
-import { IProduct } from "../../interfaces/product";
+import { IProduct, IProductsResponse } from "../../interfaces/product";
 
 type Props = {
   category: string;
@@ -19,8 +19,10 @@ const Category: React.FC<Props> = ({ category, title }) => {
   useEffect(() => {
     setLoading(true);
     const getData = async () => {
-      const productData = await getSpecificCategory(category);
-      setProducts(productData.data);
+      const productsData: IProductsResponse = await getSpecificCategory(
+        category
+      );
+      setProducts(productsData.data);
       setLoading(false);
     };
 

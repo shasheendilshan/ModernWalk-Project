@@ -3,7 +3,7 @@ import { BallBeat } from "react-pure-loaders";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
-import { ProductsSlider } from "../../components";
+import { ProductsSlider, ProductCard } from "../../components";
 import { IProduct } from "../../interfaces/product";
 import { getAllProducts } from "../../api/products";
 
@@ -59,7 +59,11 @@ const FlashSales: React.FC = () => {
           </h2>
         </div>
         <div className=" container mx-auto min-h-[480px]">
-          <ProductsSlider products={flashSaleProducts} />
+          <ProductsSlider>
+            {flashSaleProducts?.map((product, index) => (
+              <ProductCard key={index} product={product} />
+            ))}
+          </ProductsSlider>
         </div>
       </div>
     );

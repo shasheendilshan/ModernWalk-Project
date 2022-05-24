@@ -13,3 +13,8 @@ export interface IProduct{
     image:string,
     rating:Rating
 }
+
+export interface IProductsResponse{
+    data:IProduct[],
+    error:string| null
+}
