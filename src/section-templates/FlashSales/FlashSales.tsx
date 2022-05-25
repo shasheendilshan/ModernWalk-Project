@@ -15,6 +15,7 @@ const FlashSales: React.FC = () => {
     setLoading(true);
     const fetchData = async () => {
       const productsData = await getAllProducts();
+
       setFlashSaleProducts(
         productsData?.data.filter(
           (product: IProduct) =>

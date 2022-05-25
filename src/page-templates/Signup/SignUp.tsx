@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import { Button, Input } from "../../components";
+import { errorToast } from "../../components/Toast/Toast";
 
 import { createUser } from "./../../api/users";
 import { IUser } from "./../../interfaces/user";
@@ -50,14 +50,13 @@ const SignUp: React.FC = () => {
       if (response?.status === 201) {
         console.log("User Created successfully", response?.status);
         clearFields();
-
         navigate("/sign-in");
       } else {
-        toast.error("Something went wrong");
+        errorToast("Something went wrong");
       }
     } else {
       console.log("User Created Fail");
-      toast.error("Fill all required fields");
+      errorToast("Fill all required fields");
     }
   };
 

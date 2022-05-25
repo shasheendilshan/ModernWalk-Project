@@ -1,9 +1,16 @@
-import React, { useState, createContext, useEffect } from "react";
+import React, {
+  useState,
+  createContext,
+  useEffect,
+  useContext,
+  useMemo,
+} from "react";
 
 import { IUser, IUserContext } from "./../interfaces/user";
 import {
   getUserFromLocalStorage,
   removeUserFromLocalStorage,
+  setUserInLocalStorage,
 } from "../lib/helpers";
 
 export const UserContext = createContext<IUserContext | null>(null);
@@ -12,7 +19,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-const AuthProvider = ({ children }: Props) => {
+const UserProvider = ({ children }: Props) => {
   const [user, setUser] = useState<IUser | null>(null);
 
   useEffect(() => {
@@ -27,17 +34,33 @@ const AuthProvider = ({ children }: Props) => {
 
   const setUserDetails = (user: IUser) => {
     setUser(user);
+    setUserInLocalStorage(user);
   };
   const removeUserDetails = () => {
     setUser(null);
     removeUserFromLocalStorage();
   };
 
-  return (
-    <UserContext.Provider value={{ user, setUserDetails, removeUserDetails }}>
-      {children}
-    </UserContext.Provider>
-  );
+  const data = useMemo(() => {
+    return {
+      user,
+      setUserDetails,
+      removeUserDetails,
+    };
+  }, [user]);
+
+  return <UserContext.Provider value={data}>{children}</UserContext.Provider>;
 };
 
-export default AuthProvider;
+const useUserContext = () => {
+  const context = useContext(UserContext);
+  if (context === undefined) {
+    throw new Error("useUserContext must be used within a UserProvider");
+  }
+
+  const { user, setUserDetails, removeUserDetails } = context as IUserContext;
+
+  return { user, setUserDetails, removeUserDetails };
+};
+
+export { UserProvider, useUserContext };

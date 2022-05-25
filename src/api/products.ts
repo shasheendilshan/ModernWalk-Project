@@ -1,10 +1,13 @@
-import axios from "axios";
+
+import { get } from '.';
 import {IProductsResponse } from '../interfaces/product';
+
+const baseUrl = "https://fakestoreapi.com";
 
 export const getAllProducts = async () => {
     try {
-      const allProducts = await axios.get(
-        "https://fakestoreapi.com/products?limit=18"
+      const allProducts = await get(
+        `${baseUrl}/products?limit=18`
       );
 
       const Response:IProductsResponse = {
@@ -21,11 +24,12 @@ export const getAllProducts = async () => {
       return Response;
     }
   };
-  
+
+
   export const getSpecificCategory = async (category:string, limit?:number) => {
     try {
-      const allProducts = await axios.get(
-        `https://fakestoreapi.com/products/category/${category}${
+      const allProducts = await get(
+        `${baseUrl}/products/category/${category}${
           limit ? "?limit=" + limit : ""
         }`
       );

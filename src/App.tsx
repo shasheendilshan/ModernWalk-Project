@@ -2,12 +2,12 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
 import { Navbar } from "./components";
-import AuthProvider from "./context/userContext";
+import { UserProvider } from "./context/userContext";
 import { Home, Category, SignUp, SignIn } from "./page-templates";
 
 const App = () => {
   return (
-    <AuthProvider>
+    <UserProvider>
       <BrowserRouter>
         <Navbar />
         <ToastContainer />
@@ -32,7 +32,7 @@ const App = () => {
           />
         </Routes>
       </BrowserRouter>
-    </AuthProvider>
+    </UserProvider>
   );
 };
 

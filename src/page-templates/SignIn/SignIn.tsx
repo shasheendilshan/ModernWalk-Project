@@ -1,18 +1,17 @@
-import React, { useState, useContext, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { getUser } from "../../api/users";
-import { UserContext } from "./../../context/userContext";
-import { IUserContext, IUser } from "./../../interfaces/user";
-import { toast } from "react-toastify";
-import { setUserInLocalStorage } from "../../lib/helpers";
+import { useUserContext } from "./../../context/userContext";
+import { IUser } from "./../../interfaces/user";
 import { Button, Input } from "../../components";
+import { errorToast } from "../../components/Toast/Toast";
 
 const SignIn: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { setUserDetails } = useContext(UserContext) as IUserContext;
+  const { setUserDetails } = useUserContext();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -24,15 +23,13 @@ const SignIn: React.FC = () => {
       };
       const response = await getUser(userData);
       if (response?.data.length === 1) {
-        console.log("login successful");
         setUserDetails(response.data[0]);
-        setUserInLocalStorage(response.data[0]);
         navigate("/");
       } else {
-        toast.error("Invalid email or password");
+        errorToast("Invalid email or password");
       }
     } else {
-      toast.error("Fill all required fields");
+      errorToast("Fill all required fields");
     }
   };
 

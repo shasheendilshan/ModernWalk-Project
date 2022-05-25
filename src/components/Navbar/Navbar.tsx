@@ -1,12 +1,11 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { AiOutlineShopping, AiOutlineLogout } from "react-icons/ai";
 
-import { IUserContext } from "./../../interfaces/user";
-import { UserContext } from "./../../context/userContext";
+import { useUserContext } from "./../../context/userContext";
 
 const Navbar: React.FC = () => {
-  const { user, removeUserDetails } = useContext(UserContext) as IUserContext;
+  const { user, removeUserDetails } = useUserContext();
 
   return (
     <div className="w-[100%] h-[70px] z-20 bg-white drop-shadow-lg fixed flex items-center top-0">
@@ -57,9 +56,9 @@ const Navbar: React.FC = () => {
             </div>
           )}
           <div className=" relative cursor-pointer ">
-            <span className="w-[25px] h-[25px]  rounded-full bg-red-500 text-center text-white absolute right-[-15px] top-[-2px]">
+            {/* <span className="w-[25px] h-[25px]  rounded-full bg-red-500 text-center text-white absolute right-[-15px] top-[-2px]">
               1
-            </span>
+            </span> */}
             <AiOutlineShopping size={35} />
           </div>
         </div>
