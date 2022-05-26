@@ -1,5 +1,5 @@
 
-import { IUser } from '../interfaces/user';
+import { IUser } from '../interfaces/users/users.interfaces';
 
 
 export const setUserInLocalStorage =(user:IUser)=>{

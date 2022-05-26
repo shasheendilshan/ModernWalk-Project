@@ -1,6 +1,6 @@
 
-import { get } from '.';
-import {IProductsResponse } from '../interfaces/product';
+import { get } from './api.services';
+import {IProductsResponse } from '../interfaces/products/products.interfaces';
 
 const baseUrl = "https://fakestoreapi.com";
 

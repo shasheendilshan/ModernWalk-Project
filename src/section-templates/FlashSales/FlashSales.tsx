@@ -4,8 +4,8 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 import { ProductsSlider, ProductCard } from "../../components";
-import { IProduct } from "../../interfaces/product";
-import { getAllProducts } from "../../api/products";
+import { IProduct } from "../../interfaces/products/products.interfaces";
+import { getAllProducts } from "../../services/products.services";
 
 const FlashSales: React.FC = () => {
   const [flashSaleProducts, setFlashSaleProducts] = useState<IProduct[]>([]);

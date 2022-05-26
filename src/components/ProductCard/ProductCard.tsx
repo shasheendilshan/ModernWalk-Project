@@ -1,6 +1,6 @@
 import React from "react";
 
-import { IProduct } from "../../interfaces/product";
+import { IProduct } from "../../interfaces/products/products.interfaces";
 
 type Props = {
   product: IProduct;

@@ -3,9 +3,12 @@ import Skeleton from "react-loading-skeleton";
 import { BallBeat } from "react-pure-loaders";
 import "react-loading-skeleton/dist/skeleton.css";
 
-import { getSpecificCategory } from "../../api/products";
+import { getSpecificCategory } from "../../services/products.services";
 import { ProductCard } from "../../components";
-import { IProduct, IProductsResponse } from "../../interfaces/product";
+import {
+  IProduct,
+  IProductsResponse,
+} from "../../interfaces/products/products.interfaces";
 
 type Props = {
   category: string;
