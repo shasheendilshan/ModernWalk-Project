@@ -1,25 +1,23 @@
 import React, { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
+import { BallBeat } from "react-pure-loaders";
+
 import { Button, Input } from "../../components";
-import { errorToast } from "../../components/Toast/Toast";
 import { validateSignUp } from "../../lib/helpers";
-
-import { createUser } from "./../../api/users";
-import { IUser } from "./../../interfaces/user";
-
-type errorProps = {
-  firstName?: string;
-  lastName?: string;
-  email?: string;
-  password?: string;
-};
+import { createUser } from "../../services/users.services";
+import { IUser } from "../../interfaces/users/users.interfaces";
+import { IValidationProps } from "./../../interfaces/global/global.interface";
 
 const SignUp: React.FC = () => {
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [errors, setErrors] = useState<errorProps[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [validationErrors, setValidationErrors] = useState<IValidationProps[]>(
+    []
+  );
 
   const navigate = useNavigate();
 
@@ -50,10 +48,10 @@ const SignUp: React.FC = () => {
     const errorsList = validateSignUp(firstName, lastName, email, password);
 
     if (errorsList.length === 0) {
-      setErrors(errorsList);
+      setValidationErrors(errorsList);
       registerUser(firstName, lastName, email, password);
     } else {
-      setErrors(errorsList);
+      setValidationErrors(errorsList);
     }
   };
 
@@ -69,13 +67,21 @@ const SignUp: React.FC = () => {
       email,
       password,
     };
+
+    setLoading(true);
     const response = await createUser(userData);
-    if (response?.status === 201) {
-      console.log("User Created successfully", response?.status);
-      clearFields();
-      navigate("/sign-in");
+    setLoading(false);
+
+    if (!response.error) {
+      if (response?.status === 201) {
+        console.log("User Created successfully", response.status);
+        clearFields();
+        navigate("/sign-in");
+      } else {
+        setError("Something went wrong");
+      }
     } else {
-      errorToast("Something went wrong");
+      setError(response.error.message);
     }
   };
 
@@ -94,7 +100,11 @@ const SignUp: React.FC = () => {
             Sign Up
           </div>
         </div>
-
+        {error && (
+          <div className="flex items-center justify-center py-1">
+            <p className="text-red-500">{error}</p>
+          </div>
+        )}
         <form onSubmit={(e) => handleSubmit(e)} className="space-y-4">
           <Input
             label="First Name"
@@ -103,9 +113,8 @@ const SignUp: React.FC = () => {
             onChange={handleFirstName}
             value={firstName}
             error={
-              errors?.find((item: errorProps) => item.firstName) === undefined
-                ? ""
-                : errors?.find((item: errorProps) => item.firstName)?.firstName
+              validationErrors &&
+              validationErrors.find((item) => item.firstName)?.firstName
             }
           />
 
@@ -117,9 +126,8 @@ const SignUp: React.FC = () => {
             onChange={handleLastName}
             value={lastName}
             error={
-              errors?.find((item: errorProps) => item.lastName) === undefined
-                ? ""
-                : errors?.find((item: errorProps) => item.lastName)?.lastName
+              validationErrors &&
+              validationErrors.find((item) => item.lastName)?.lastName
             }
           />
 
@@ -130,9 +138,8 @@ const SignUp: React.FC = () => {
             onChange={handleEmail}
             value={email}
             error={
-              errors?.find((item: errorProps) => item.email) === undefined
-                ? ""
-                : errors?.find((item: errorProps) => item.email)?.email
+              validationErrors &&
+              validationErrors.find((item) => item.email)?.email
             }
           />
 
@@ -143,9 +150,8 @@ const SignUp: React.FC = () => {
             onChange={handlePassword}
             value={password}
             error={
-              errors?.find((item: errorProps) => item.password) === undefined
-                ? ""
-                : errors?.find((item: errorProps) => item.password)?.password
+              validationErrors &&
+              validationErrors.find((item) => item.password)?.password
             }
           />
 
@@ -164,9 +170,11 @@ const SignUp: React.FC = () => {
               </p>
             </div>
           </div>
-
+          <div className="container mx-auto flex justify-center">
+            <BallBeat color={"#2BD9AF"} loading={loading} />
+          </div>
           <div>
-            <Button name="Sign Up" />
+            <Button name="Sign Up" disable={loading} />
           </div>
         </form>
       </div>

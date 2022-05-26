@@ -32,3 +32,20 @@ export const validateSignUp = (
     }
     return errors;
   };
+
+  export const validateSignIn = (
+    email: string,
+    password: string
+  ) => {
+    let errors = [];
+
+    if (email === "") {
+      errors.push({ email: "Enter email" });
+    } else if (!/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(email)) {
+      errors.push({ email: "Enter valid email " });
+    }
+    if (password === "") {
+      errors.push({ password: "Enter password" });
+    }
+    return errors;
+  };

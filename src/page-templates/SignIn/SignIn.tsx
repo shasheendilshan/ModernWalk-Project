@@ -1,45 +1,36 @@
 import React, { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
+import { BallBeat } from "react-pure-loaders";
 
-import { getUser } from "../../api/users";
+import { getUser } from "../../services/users.services";
 import { useUserContext } from "./../../context/userContext";
-import { IUser } from "./../../interfaces/user";
+import { IUser } from "../../interfaces/users/users.interfaces";
 import { Button, Input } from "../../components";
+import { validateSignIn } from "../../lib/helpers";
+import { IValidationProps } from "./../../interfaces/global/global.interface";
 
 const SignIn: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [validationErrors, setValidationErrors] = useState<IValidationProps[]>(
+    []
+  );
 
-  const { setUserDetails } = useUserContext();
+  const userCtx = useUserContext();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (validate()) {
-      const userData: IUser = {
-        email,
-        password,
-      };
-      const response = await getUser(userData);
-      if (response?.data.length === 1) {
-        setUserDetails(response.data[0]);
-        navigate("/");
-      } else {
-        //errorToast("Invalid email or password");
-        setError("Invalid email or password");
-      }
-    } else {
-      setError("Fill all required fields");
-    }
-  };
+    const errorsList = validateSignIn(email, password);
 
-  const validate = () => {
-    if (email === "" || password === "") {
-      return false;
+    if (errorsList.length === 0) {
+      setValidationErrors(errorsList);
+      signInUser(email, password);
     } else {
-      return true;
+      setValidationErrors(errorsList);
     }
   };
 
@@ -53,6 +44,28 @@ const SignIn: React.FC = () => {
     },
     []
   );
+
+  const signInUser = async (email: string, password: string) => {
+    const userData: IUser = {
+      email,
+      password,
+    };
+
+    setLoading(true);
+    const response = await getUser(userData);
+    setLoading(false);
+
+    if (!response.error) {
+      if (response?.data.length === 1) {
+        userCtx?.setUserDetails(response.data[0]);
+        navigate("/");
+      } else {
+        setError("Invalid email or password");
+      }
+    } else {
+      setError(response.error.message);
+    }
+  };
 
   return (
     <div className="mt-[70px]  min-h-screen flex flex-col item-center">
@@ -74,6 +87,10 @@ const SignIn: React.FC = () => {
             label="Email"
             onChange={handleEmail}
             value={email}
+            error={
+              validationErrors &&
+              validationErrors.find((item) => item.email)?.email
+            }
           />
 
           <Input
@@ -82,6 +99,10 @@ const SignIn: React.FC = () => {
             label="Password"
             onChange={handlePassword}
             value={password}
+            error={
+              validationErrors &&
+              validationErrors.find((item) => item.password)?.password
+            }
           />
 
           <div className="flex items-center justify-between">
@@ -110,8 +131,11 @@ const SignIn: React.FC = () => {
               </p>
             </div>
           </div>
+          <div className="container mx-auto flex justify-center">
+            <BallBeat color={"#2BD9AF"} loading={loading} />
+          </div>
           <div>
-            <Button name="Sign In" />
+            <Button name="Sign In" disable={loading} />
           </div>
         </form>
       </div>
