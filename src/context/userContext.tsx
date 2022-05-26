@@ -11,7 +11,7 @@ import {
   getUserFromLocalStorage,
   removeUserFromLocalStorage,
   setUserInLocalStorage,
-} from "../lib/helpers";
+} from "../lib/localStorage";
 
 export const UserContext = createContext<IUserContext | null>(null);
 
