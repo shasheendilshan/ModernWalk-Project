@@ -6,7 +6,8 @@ import { useUserContext } from "./../../context/userContext";
 import { Button } from "../index";
 
 const Navbar: React.FC = () => {
-  const { user, removeUserDetails } = useUserContext();
+  // const { user, removeUserDetails } = useUserContext();
+  const userCtx = useUserContext();
 
   return (
     <div className="w-[100%] h-[70px] z-20 bg-white drop-shadow-lg fixed flex items-center top-0">
@@ -19,7 +20,7 @@ const Navbar: React.FC = () => {
           </Link>
         </div>
         <div className="items-center  h-full flex justify-end flex-1 space-x-3 mr-5  ">
-          {user === null ? (
+          {!userCtx?.user ? (
             <>
               <Link to="/sign-in">
                 <Button name="Sign in" />
@@ -30,16 +31,18 @@ const Navbar: React.FC = () => {
               <div className="items-center px-2 group inline-block relative cursor-pointer">
                 <div className="flex items-center space-x-2">
                   <span className="bg-gray-300 text-blue-700 h-[35px] w-[35px] flex items-center justify-center rounded-full">
-                    <h2 className="text-xl ">{user?.firstName?.charAt(0)}</h2>
+                    <h2 className="text-xl ">
+                      {userCtx.user?.firstName?.charAt(0)}
+                    </h2>
                   </span>
                   <h3 className="text-md lg:text-xl">
-                    Welcome {user?.firstName} !
+                    Welcome {userCtx.user?.firstName} !
                   </h3>
                 </div>
 
                 <ul className="absolute w-[150px] h-[100px] text-gray-700 pt-1  p-2 rounded-md shadow-lg hidden group-hover:block bg-white">
                   <li
-                    onClick={removeUserDetails}
+                    onClick={userCtx.removeUserDetails}
                     className="flex items-center rounded-sm justify-center hover:bg-[#27c39e] "
                   >
                     <AiOutlineLogout size={25} />

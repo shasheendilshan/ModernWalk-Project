@@ -6,12 +6,18 @@ import React, {
   useMemo,
 } from "react";
 
-import { IUser, IUserContext } from "./../interfaces/user";
+import { IUser } from "../interfaces/users/users.interfaces";
 import {
   getUserFromLocalStorage,
   removeUserFromLocalStorage,
   setUserInLocalStorage,
 } from "../lib/localStorage";
+
+interface IUserContext {
+  user: IUser | null;
+  setUserDetails: (user: IUser) => void;
+  removeUserDetails: () => void;
+}
 
 export const UserContext = createContext<IUserContext | null>(null);
 
@@ -58,9 +64,7 @@ const useUserContext = () => {
     throw new Error("useUserContext must be used within a UserProvider");
   }
 
-  const { user, setUserDetails, removeUserDetails } = context as IUserContext;
-
-  return { user, setUserDetails, removeUserDetails };
+  return context;
 };
 
 export { UserProvider, useUserContext };
