@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { AiOutlineShopping, AiOutlineLogout } from "react-icons/ai";
 
 import { useUserContext } from "./../../context/userContext";
+import { Button } from "../index";
 
 const Navbar: React.FC = () => {
   const { user, removeUserDetails } = useUserContext();
@@ -12,7 +13,7 @@ const Navbar: React.FC = () => {
       <div className="container mx-auto flex items-center justify-between ">
         <div className="flex items-center justify-center h-full">
           <Link to="/">
-            <h1 className="text-3xl md:text-4xl font-bold text-slate-700">
+            <h1 className="text-3xl ml-5 md:ml-5 md:text-4xl font-bold text-slate-700">
               Modern Walk
             </h1>
           </Link>
@@ -21,9 +22,7 @@ const Navbar: React.FC = () => {
           {user === null ? (
             <>
               <Link to="/sign-in">
-                <button className=" h-[40px] bg-[#2BD9AF] hover:bg-[#27c39e] text-white font-bold py-1 px-5 rounded-3xl">
-                  Sign in
-                </button>
+                <Button name="Sign in" />
               </Link>
             </>
           ) : (
@@ -55,7 +54,7 @@ const Navbar: React.FC = () => {
               </div>
             </div>
           )}
-          <div className=" relative cursor-pointer ">
+          <div className=" relative cursor-pointer">
             {/* <span className="w-[25px] h-[25px]  rounded-full bg-red-500 text-center text-white absolute right-[-15px] top-[-2px]">
               1
             </span> */}
