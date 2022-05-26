@@ -1,25 +1,28 @@
 
 import { get } from './api.services';
-import {IProductsResponse } from '../interfaces/products/products.interfaces';
+import { config } from './config.services';
+import { IResponse } from '../interfaces/global/global.interface';
+import { errorToast } from '../components/Toast/Toast';
 
-const baseUrl = "https://fakestoreapi.com";
+
 
 export const getAllProducts = async () => {
     try {
       const allProducts = await get(
-        `${baseUrl}/products?limit=18`
+        `${config.productsBaseUrl}/products?limit=18`
       );
 
-      const response:IProductsResponse = {
+      const response:IResponse= {
         data: allProducts.data,
-        error: null
+        error: null,
+        status:allProducts.status
       }   
       return response;
     } catch (error:any) {
-      console.log(error.response);
-      const response:IProductsResponse = {
+      errorToast(error.message)
+      const response:IResponse = {
         data: [],
-        error: error.message
+        error: error
       }  
       return response;
     }
@@ -29,21 +32,21 @@ export const getAllProducts = async () => {
   export const getSpecificCategory = async (category:string, limit?:number) => {
     try {
       const allProducts = await get(
-        `${baseUrl}/products/category/${category}${
+        `${config.productsBaseUrl}/products/category/${category}${
           limit ? "?limit=" + limit : ""
         }`
       );
 
-     const response:IProductsResponse = {
+     const response:IResponse = {
         data: allProducts.data,
         error: null
       }   
       return response;
     } catch (error:any) {
-      console.log(error.response);
-      const response:IProductsResponse = {
+      errorToast(error.message)
+      const response:IResponse = {
         data: [],
-        error: error.message
+        error: error
       }  
       return response;
     }
