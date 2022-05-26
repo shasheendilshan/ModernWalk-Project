@@ -1,7 +1,6 @@
 import React, { useState, createContext, useMemo, useContext } from "react";
 
-import { ICartContext } from "./../interfaces/product";
-
+import { ICartContext } from "./../interfaces/products/products.interfaces";
 export const CartContext = createContext<ICartContext | null>(null);
 
 type Props = {
@@ -36,9 +35,7 @@ const useCartContext = () => {
     throw new Error("useCartContext must be used within a CartProvider");
   }
 
-  const { show, showCart, hideCart } = context as ICartContext;
-
-  return { show, showCart, hideCart };
+  return context;
 };
 
 export { CartProvider, useCartContext };

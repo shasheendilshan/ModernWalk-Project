@@ -8,7 +8,7 @@ import { Button, Cart } from "../index";
 
 const Navbar: React.FC = () => {
   const userCtx = useUserContext();
-  const { show, showCart } = useCartContext();
+  const cartCtx = useCartContext();
   return (
     <div className="w-[100%] h-[70px] z-20 bg-white drop-shadow-lg fixed flex items-center top-0">
       <div className="container mx-auto flex items-center justify-between ">
@@ -61,11 +61,11 @@ const Navbar: React.FC = () => {
             {/* <span className="w-[25px] h-[25px]  rounded-full bg-red-500 text-center text-white absolute right-[-15px] top-[-2px]">
               1
             </span> */}
-            <AiOutlineShopping size={35} onClick={showCart} />
+            <AiOutlineShopping size={35} onClick={cartCtx?.showCart} />
           </div>
         </div>
       </div>
-      {show && <Cart />}
+      {cartCtx?.show && <Cart />}
     </div>
   );
 };
