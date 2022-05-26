@@ -11,8 +11,8 @@ export const createUser=async(user:IUser)=>{
          ...user
      }   
     try {
-         const Response = await post(`${baseUrl}/users`,body);
-         return Response;
+         const response = await post(`${baseUrl}/users`,body);
+         return response;
     } catch (error:any) {
         console.log("error while user create",error.message)
         
@@ -22,8 +22,8 @@ export const createUser=async(user:IUser)=>{
 export const getUser =async(user:IUser)=>{
   
    try {
-        const Response = await get(`${baseUrl}/users?email=${user.email}&password=${user.password}`);
-        return Response;
+        const response = await get(`${baseUrl}/users?email=${user.email}&password=${user.password}`);
+        return response;
    } catch (error:any) {
        console.log("error while user create",error.message)
    }

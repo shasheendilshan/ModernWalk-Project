@@ -10,18 +10,18 @@ export const getAllProducts = async () => {
         `${baseUrl}/products?limit=18`
       );
 
-      const Response:IProductsResponse = {
+      const response:IProductsResponse = {
         data: allProducts.data,
         error: null
       }   
-      return Response;
+      return response;
     } catch (error:any) {
       console.log(error.response);
-      const Response:IProductsResponse = {
+      const response:IProductsResponse = {
         data: [],
         error: error.message
       }  
-      return Response;
+      return response;
     }
   };
 
@@ -34,18 +34,18 @@ export const getAllProducts = async () => {
         }`
       );
 
-     const Response:IProductsResponse = {
+     const response:IProductsResponse = {
         data: allProducts.data,
         error: null
       }   
-      return Response;
+      return response;
     } catch (error:any) {
       console.log(error.response);
-      const Response:IProductsResponse = {
+      const response:IProductsResponse = {
         data: [],
         error: error.message
       }  
-      return Response;
+      return response;
     }
   };
   
