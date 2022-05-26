@@ -5,17 +5,18 @@ import { getUser } from "../../api/users";
 import { useUserContext } from "./../../context/userContext";
 import { IUser } from "./../../interfaces/user";
 import { Button, Input } from "../../components";
-import { errorToast } from "../../components/Toast/Toast";
 
 const SignIn: React.FC = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [error, setError] = useState<string | null>(null);
 
   const { setUserDetails } = useUserContext();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     if (validate()) {
       const userData: IUser = {
         email,
@@ -26,10 +27,11 @@ const SignIn: React.FC = () => {
         setUserDetails(response.data[0]);
         navigate("/");
       } else {
-        errorToast("Invalid email or password");
+        //errorToast("Invalid email or password");
+        setError("Invalid email or password");
       }
     } else {
-      errorToast("Fill all required fields");
+      setError("Fill all required fields");
     }
   };
 
@@ -60,6 +62,11 @@ const SignIn: React.FC = () => {
             Sign In
           </div>
         </div>
+        {error && (
+          <div className="flex items-center justify-center py-1">
+            <p className="text-red-500">{error}</p>
+          </div>
+        )}
         <form onSubmit={(e) => handleSubmit(e)} className="space-y-4">
           <Input
             name="email"

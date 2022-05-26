@@ -2,15 +2,24 @@ import React, { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Input } from "../../components";
 import { errorToast } from "../../components/Toast/Toast";
+import { validateSignUp } from "../../lib/helpers";
 
 import { createUser } from "./../../api/users";
 import { IUser } from "./../../interfaces/user";
 
+type errorProps = {
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  password?: string;
+};
+
 const SignUp: React.FC = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState<string>("");
+  const [lastName, setLastName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [errors, setErrors] = useState<errorProps[]>([]);
 
   const navigate = useNavigate();
 
@@ -38,38 +47,35 @@ const SignUp: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const errorsList = validateSignUp(firstName, lastName, email, password);
 
-    if (validate()) {
-      const userData: IUser = {
-        firstName,
-        lastName,
-        email,
-        password,
-      };
-      const response = await createUser(userData);
-      if (response?.status === 201) {
-        console.log("User Created successfully", response?.status);
-        clearFields();
-        navigate("/sign-in");
-      } else {
-        errorToast("Something went wrong");
-      }
+    if (errorsList.length === 0) {
+      setErrors(errorsList);
+      registerUser(firstName, lastName, email, password);
     } else {
-      console.log("User Created Fail");
-      errorToast("Fill all required fields");
+      setErrors(errorsList);
     }
   };
 
-  const validate = () => {
-    if (
-      firstName === "" ||
-      lastName === "" ||
-      email === "" ||
-      password === ""
-    ) {
-      return false;
+  const registerUser = async (
+    firstName: string,
+    lastName: string,
+    email: string,
+    password: string
+  ) => {
+    const userData: IUser = {
+      firstName,
+      lastName,
+      email,
+      password,
+    };
+    const response = await createUser(userData);
+    if (response?.status === 201) {
+      console.log("User Created successfully", response?.status);
+      clearFields();
+      navigate("/sign-in");
     } else {
-      return true;
+      errorToast("Something went wrong");
     }
   };
 
@@ -88,6 +94,7 @@ const SignUp: React.FC = () => {
             Sign Up
           </div>
         </div>
+
         <form onSubmit={(e) => handleSubmit(e)} className="space-y-4">
           <Input
             label="First Name"
@@ -95,6 +102,11 @@ const SignUp: React.FC = () => {
             type="text"
             onChange={handleFirstName}
             value={firstName}
+            error={
+              errors?.find((item: errorProps) => item.firstName) === undefined
+                ? ""
+                : errors?.find((item: errorProps) => item.firstName)?.firstName
+            }
           />
 
           <Input
@@ -104,6 +116,11 @@ const SignUp: React.FC = () => {
             className="w-full p-2 border border-gray-300 mt-1 rounded-sm focus:outline-none"
             onChange={handleLastName}
             value={lastName}
+            error={
+              errors?.find((item: errorProps) => item.lastName) === undefined
+                ? ""
+                : errors?.find((item: errorProps) => item.lastName)?.lastName
+            }
           />
 
           <Input
@@ -112,6 +129,11 @@ const SignUp: React.FC = () => {
             label="Email"
             onChange={handleEmail}
             value={email}
+            error={
+              errors?.find((item: errorProps) => item.email) === undefined
+                ? ""
+                : errors?.find((item: errorProps) => item.email)?.email
+            }
           />
 
           <Input
@@ -120,6 +142,11 @@ const SignUp: React.FC = () => {
             label="Password"
             onChange={handlePassword}
             value={password}
+            error={
+              errors?.find((item: errorProps) => item.password) === undefined
+                ? ""
+                : errors?.find((item: errorProps) => item.password)?.password
+            }
           />
 
           <div className="flex items-center justify-center pt-4">

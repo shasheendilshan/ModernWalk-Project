@@ -14,3 +14,13 @@ export interface IUserContext{
   removeUserDetails:()=>void
 
 }
+
+export interface IUserCreateResponse{
+  
+    id: string,
+    firstName: string,
+    lastName: string,
+    email: string,
+    password: string
+
+}
