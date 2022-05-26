@@ -3,12 +3,12 @@ import { Link } from "react-router-dom";
 import { AiOutlineShopping, AiOutlineLogout } from "react-icons/ai";
 
 import { useUserContext } from "./../../context/userContext";
-import { Button } from "../index";
+import { useCartContext } from "../../context/cartContext";
+import { Button, Cart } from "../index";
 
 const Navbar: React.FC = () => {
-  // const { user, removeUserDetails } = useUserContext();
   const userCtx = useUserContext();
-
+  const { show, showCart } = useCartContext();
   return (
     <div className="w-[100%] h-[70px] z-20 bg-white drop-shadow-lg fixed flex items-center top-0">
       <div className="container mx-auto flex items-center justify-between ">
@@ -61,10 +61,11 @@ const Navbar: React.FC = () => {
             {/* <span className="w-[25px] h-[25px]  rounded-full bg-red-500 text-center text-white absolute right-[-15px] top-[-2px]">
               1
             </span> */}
-            <AiOutlineShopping size={35} />
+            <AiOutlineShopping size={35} onClick={showCart} />
           </div>
         </div>
       </div>
+      {show && <Cart />}
     </div>
   );
 };

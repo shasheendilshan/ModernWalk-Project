@@ -18,3 +18,11 @@ export interface IProductsResponse{
     data:IProduct[],
     error:string| null
 }
+
+export interface ICartContext{
+ 
+    show:boolean|null,
+    showCart:()=>void,
+    hideCart:()=>void,
+  
+  }
