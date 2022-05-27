@@ -2,7 +2,7 @@
 import { get } from './api.services';
 import { config } from './config.services';
 import { IResponse } from '../interfaces/global/global.interface';
-import { errorToast } from '../components/Toast/Toast';
+import { errorToast } from '../components/Toast/Toast.component';
 
 
 

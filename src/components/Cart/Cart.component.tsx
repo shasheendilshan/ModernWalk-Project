@@ -1,7 +1,7 @@
 import React from "react";
 import { AiOutlineLeft, AiOutlineShopping } from "react-icons/ai";
 import { useCartContext } from "../../context/cartContext";
-import Button from "../Button/Button";
+import Button from "../Button/Button.component";
 
 const Cart: React.FC = () => {
   const cartCtx = useCartContext();

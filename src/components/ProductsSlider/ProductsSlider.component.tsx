@@ -3,8 +3,8 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import NextArrow from "./NextArrow";
-import PreviousArrow from "./PreviousArrow";
+import NextArrow from "./NextArrow.component";
+import PreviousArrow from "./PreviousArrow.component";
 
 type Props = {
   children: React.ReactNode;

@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { AiOutlineShopping, AiOutlineLogout } from "react-icons/ai";
 
-import { useUserContext } from "./../../context/userContext";
+import { useUserContext } from "../../context/userContext";
 import { useCartContext } from "../../context/cartContext";
 import { Button, Cart } from "../index";
 

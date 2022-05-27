@@ -4,7 +4,7 @@ import {v4 as uuid} from "uuid";
 import { IUser } from "../interfaces/users/users.interfaces";
 import { config } from './config.services';
 import { IResponse } from '../interfaces/global/global.interface';
-import { errorToast } from '../components/Toast/Toast';
+import { errorToast } from '../components/Toast/Toast.component';
 
 
 
