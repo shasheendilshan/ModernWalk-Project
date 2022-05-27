@@ -1,5 +1,5 @@
-import Categories from './Categories/Categories';
-import FlashSales from './FlashSales/FlashSales';
+import Categories from './Categories/Categories.section-template';
+import FlashSales from './FlashSales/FlashSales.section-template';
 
 
 
