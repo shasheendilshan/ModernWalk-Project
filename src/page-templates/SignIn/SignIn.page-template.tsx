@@ -3,11 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { BallBeat } from "react-pure-loaders";
 
 import { getUser } from "../../services/users.services";
-import { useUserContext } from "./../../context/userContext";
+import { useUserContext } from "../../context/userContext";
 import { IUser } from "../../interfaces/users/users.interfaces";
 import { Button, Input } from "../../components";
 import { validateSignIn } from "../../lib/helpers";
-import { IValidationProps } from "./../../interfaces/global/global.interface";
+import { IValidationProps } from "../../interfaces/global/global.interface";
 
 const SignIn: React.FC = () => {
   const [email, setEmail] = useState<string>("");

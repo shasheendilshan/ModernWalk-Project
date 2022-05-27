@@ -6,7 +6,7 @@ import { Button, Input } from "../../components";
 import { validateSignUp } from "../../lib/helpers";
 import { createUser } from "../../services/users.services";
 import { IUser } from "../../interfaces/users/users.interfaces";
-import { IValidationProps } from "./../../interfaces/global/global.interface";
+import { IValidationProps } from "../../interfaces/global/global.interface";
 
 const SignUp: React.FC = () => {
   const [firstName, setFirstName] = useState<string>("");
