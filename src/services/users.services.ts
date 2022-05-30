@@ -4,8 +4,6 @@ import {v4 as uuid} from "uuid";
 import { IUser } from "../interfaces/users/users.interfaces";
 import { config } from './config.services';
 import { IResponse } from '../interfaces/global/global.interface';
-import { errorToast } from '../components/Toast/Toast.component';
-
 
 
 
@@ -44,8 +42,7 @@ export const getUser =async(user:IUser)=>{
         }
         return Response;
    } catch (error:any) {
-       console.log("error while user create",error)
-       errorToast(error.message)
+    console.log("error while get user",error.message)
        const Response:IResponse ={
         data:[],
         error:error

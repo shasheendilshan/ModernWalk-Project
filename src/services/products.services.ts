@@ -1,16 +1,12 @@
 
 import { get } from './api.services';
-import { config } from './config.services';
 import { IResponse } from '../interfaces/global/global.interface';
-import { errorToast } from '../components/Toast/Toast.component';
 
 
 
 export const getAllProducts = async () => {
     try {
-      const allProducts = await get(
-        `${config.productsBaseUrl}/products?limit=18`
-      );
+      const allProducts = await get("/products");
 
       const response:IResponse= {
         data: allProducts.data,
@@ -19,7 +15,7 @@ export const getAllProducts = async () => {
       }   
       return response;
     } catch (error:any) {
-      errorToast(error.message)
+     
       const response:IResponse = {
         data: [],
         error: error
@@ -32,7 +28,7 @@ export const getAllProducts = async () => {
   export const getSpecificCategory = async (category:string, limit?:number) => {
     try {
       const allProducts = await get(
-        `${config.productsBaseUrl}/products/category/${category}${
+        `/products?category=${category}${
           limit ? "?limit=" + limit : ""
         }`
       );
@@ -43,7 +39,7 @@ export const getAllProducts = async () => {
       }   
       return response;
     } catch (error:any) {
-      errorToast(error.message)
+     
       const response:IResponse = {
         data: [],
         error: error

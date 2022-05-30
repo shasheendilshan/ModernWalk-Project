@@ -1,6 +1,14 @@
 import  axios  from 'axios';
+import { config } from './config.services';
+import { errorToast } from '../components/Toast/Toast.component';
 
-const get =(url:string)=>axios.get(url)
-const post =(url:string,body:object)=>axios.post(url,body);
+const axiosClient = axios.create();
+
+axiosClient.defaults.baseURL = config.baseUrl;
+
+
+
+const get =(url:string)=>axiosClient.get(url).then((res:any)=>{return res}).catch((error)=>{errorToast(error.message)})
+const post =(url:string,body:object)=>axiosClient.post(url,body).then((res:any)=>{return res}).catch((error)=>{errorToast(error.message)})
 
 export {get,post}
