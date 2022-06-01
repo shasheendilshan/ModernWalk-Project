@@ -1,9 +1,12 @@
-import Navbar from "./Navbar/Navbar.component";
-import ProductCard from './ProductCard/ProductCard.component';
-import ProductsSlider from './ProductsSlider/ProductsSlider.component';
-import Input from './Input/Input.component';
-import Button from './Button/Button.component';
-import Cart from './Cart/Cart.component';
+import NavbarComponent from "./Navbar/Navbar.component";
+import ProductCardComponent from "./ProductCard/ProductCard.component";
+import ProductsSliderComponent from "./ProductsSlider/ProductsSlider.component";
+import InputComponent from "./Input/Input.component";
+import ButtonComponent from "./Button/Button.component";
+import Cart from "./Cart/Cart.component";
 
 
-export{ Navbar,ProductCard,ProductsSlider,Input,Button,Cart}
+
+
+
+export{NavbarComponent as Navbar,ProductCardComponent as ProductCard,ProductsSliderComponent as ProductsSlider,InputComponent as Input,ButtonComponent as Button,Cart}
