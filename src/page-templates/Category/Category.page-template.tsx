@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Skeleton from "react-loading-skeleton";
 import { BallBeat } from "react-pure-loaders";
+import { useQuery } from "react-query";
 import "react-loading-skeleton/dist/skeleton.css";
 
 import { getSpecificCategory } from "../../services/products.services";
@@ -13,21 +14,17 @@ type Props = {
 };
 
 const Category: React.FC<Props> = ({ category, title }) => {
-  const [products, setProducts] = useState<IProduct[]>([]);
-  const [loading, setLoading] = useState<Boolean>(true);
+  const getProducts = () => {
+    return getSpecificCategory(category);
+  };
 
-  useEffect(() => {
-    setLoading(true);
-    const getData = async () => {
-      const productsData = await getSpecificCategory(category);
-      setProducts(productsData.data);
-      setLoading(false);
-    };
+  const { data, isLoading, status } = useQuery(
+    ["getProductsCategory", category],
+    getProducts
+  );
+  console.log("Data", status);
 
-    getData();
-  }, [category]);
-
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="container mx-auto mt-[100px]">
         <div className="mt-[10px]">
@@ -65,7 +62,7 @@ const Category: React.FC<Props> = ({ category, title }) => {
           <h2 className="text-2xl font-bold text-zinc-600 m-10">{title}</h2>
         </div>
         <div className="w-full flex flex-wrap  md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  gap-3 justify-center">
-          {products?.map((product, index) => (
+          {data?.data.map((product: IProduct, index: number) => (
             <ProductCard key={index} product={product} />
           ))}
         </div>

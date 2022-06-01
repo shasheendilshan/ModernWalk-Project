@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { BallBeat } from "react-pure-loaders";
 import Skeleton from "react-loading-skeleton";
+import { useQuery } from "react-query";
 import "react-loading-skeleton/dist/skeleton.css";
 
 import { ProductsSlider, ProductCard } from "../../components";
@@ -8,27 +9,9 @@ import { IProduct } from "../../interfaces/products/products.interfaces";
 import { getAllProducts } from "../../services/products.services";
 
 const FlashSales: React.FC = () => {
-  const [flashSaleProducts, setFlashSaleProducts] = useState<IProduct[]>([]);
-  const [loading, setLoading] = useState<Boolean>(true);
+  const { data, isLoading } = useQuery("allProducts", getAllProducts);
 
-  useEffect(() => {
-    setLoading(true);
-    const fetchData = async () => {
-      const productsData = await getAllProducts();
-      setFlashSaleProducts(
-        productsData?.data.filter(
-          (product: IProduct) =>
-            product.category === "men's clothing" ||
-            product.category === "women's clothing"
-        )
-      );
-      setLoading(false);
-    };
-
-    fetchData();
-  }, []);
-
-  if (loading) {
+  if (isLoading) {
     return (
       <>
         <div className="container mx-auto h-[400px] flex justify-center">
@@ -60,7 +43,7 @@ const FlashSales: React.FC = () => {
         </div>
         <div className=" container mx-auto min-h-[480px]">
           <ProductsSlider>
-            {flashSaleProducts?.map((product, index) => (
+            {data?.data.map((product: IProduct, index: number) => (
               <ProductCard key={index} product={product} />
             ))}
           </ProductsSlider>
