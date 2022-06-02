@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { BallBeat } from "react-pure-loaders";
 
@@ -8,12 +8,18 @@ import { IUser } from "../../interfaces/users/users.interfaces";
 import { Button, Input } from "../../components";
 import { validateSignIn } from "../../lib/helpers";
 import { IValidationProps } from "../../interfaces/global/global.interface";
+import {
+  setRememberMe,
+  getRememberMeDetails,
+  removeRememberMeDetails,
+} from "../../lib/localStorage";
 
 const SignIn: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const [remember, setRemember] = useState<boolean>(false);
   const [validationErrors, setValidationErrors] = useState<IValidationProps[]>(
     []
   );
@@ -45,6 +51,10 @@ const SignIn: React.FC = () => {
     []
   );
 
+  const handleRemember = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setRemember(e.target.checked);
+  };
+
   const signInUser = async (email: string, password: string) => {
     const userData: IUser = {
       email,
@@ -66,6 +76,28 @@ const SignIn: React.FC = () => {
       setError(response.error.message);
     }
   };
+
+  useEffect(() => {
+    if (email !== "" && password !== "" && remember) {
+      const user = {
+        email: email,
+        password: password,
+      };
+
+      setRememberMe(user);
+    }
+    if (email === "" && password === "" && remember) {
+      removeRememberMeDetails();
+    }
+  }, [remember, email, password]);
+
+  useEffect(() => {
+    const data = getRememberMeDetails();
+    if (data) {
+      setEmail(data.email ? data.email : "");
+      setPassword(data.password ? data.password : "");
+    }
+  }, []);
 
   return (
     <div className="mt-[70px]  min-h-screen flex flex-col item-center">
@@ -107,7 +139,12 @@ const SignIn: React.FC = () => {
 
           <div className="flex items-center justify-between">
             <div className="flex items-center">
-              <input type="checkbox" className="h-4 w-4 rounded " />
+              <input
+                type="checkbox"
+                name="rememberMe"
+                onChange={handleRemember}
+                className="h-4 w-4 rounded "
+              />
               <label htmlFor="" className="ml-2 text-sm text-gray-600">
                 Remember me
               </label>

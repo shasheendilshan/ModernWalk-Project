@@ -21,3 +21,23 @@ export const getUserFromLocalStorage =()=>{
     localStorage.removeItem('userDetails');
  }
 
+
+ export const setRememberMe =(user:IUser)=>{
+   localStorage.setItem('loginDetails',JSON.stringify(user));
+}
+
+export const getRememberMeDetails =()=>{
+   const user:string|null= localStorage.getItem('loginDetails');
+  
+   if(user){
+        const userDetails:IUser = JSON.parse(user);
+    return userDetails;
+   }else{
+       return null;
+   }
+   
+ }
+ export const removeRememberMeDetails =()=>{
+   localStorage.removeItem('loginDetails');
+}
+
