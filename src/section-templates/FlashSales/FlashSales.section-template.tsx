@@ -9,8 +9,7 @@ import { IProduct } from "../../interfaces/products/products.interfaces";
 import { getAllProducts } from "../../services/products.services";
 
 const FlashSales: React.FC = () => {
-  const { data, isLoading } = useQuery("allProducts", getAllProducts);
-
+  const { data, isLoading, isError } = useQuery("allProducts", getAllProducts);
   if (isLoading) {
     return (
       <>
@@ -32,6 +31,20 @@ const FlashSales: React.FC = () => {
           <BallBeat color={"#2BD9AF"} loading />
         </div>
       </>
+    );
+  }
+  if (isError) {
+    return (
+      <div className="container mx-auto mt-[100px] px-2">
+        <div>
+          <h2 className="text-2xl font-bold text-zinc-600 mt-10">
+            Flash Sale !
+          </h2>
+        </div>
+        <div className=" container mx-auto min-h-[480px]">
+          <h3>Something went wrong!!</h3>
+        </div>
+      </div>
     );
   } else {
     return (

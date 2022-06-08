@@ -6,10 +6,13 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 import { getSpecificCategory } from "../../services/products.services";
 import { ProductCard } from "../../components";
-import { IProduct } from "../../interfaces/products/products.interfaces";
+import {
+  IProduct,
+  productCategory,
+} from "../../interfaces/products/products.interfaces";
 
 type Props = {
-  category: string;
+  category: productCategory;
   title: string;
 };
 
