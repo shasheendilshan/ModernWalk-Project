@@ -6,6 +6,7 @@ import { CartProvider } from "./context/cartContext";
 import { UserProvider } from "./context/userContext";
 import { Home, Category, SignUp, SignIn } from "./page-templates";
 import { QueryProvider } from "./context/react query/reactQuery";
+import { productCategories } from "./interfaces/products/products.interfaces";
 
 const App = () => {
   return (
@@ -23,8 +24,8 @@ const App = () => {
                 path="/mens-clothing"
                 element={
                   <Category
-                    category={"men's clothing"}
-                    title={"Men's Clothing"}
+                    category={productCategories.men}
+                    title="Men's Clothing"
                   />
                 }
               />
@@ -32,8 +33,8 @@ const App = () => {
                 path="/womens-clothing"
                 element={
                   <Category
-                    category={"women's clothing"}
-                    title={"Women's Clothing"}
+                    category={productCategories.women}
+                    title="Women's Clothing"
                   />
                 }
               />
