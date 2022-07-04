@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import { Toaster } from "react-hot-toast";
 
 import { Navbar } from "./components";
 import { CartProvider } from "./context/cartContext";
@@ -16,6 +17,7 @@ const App = () => {
           <BrowserRouter>
             <Navbar />
             <ToastContainer />
+            <Toaster />
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/sign-up" element={<SignUp />} />

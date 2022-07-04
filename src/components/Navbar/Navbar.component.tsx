@@ -1,17 +1,19 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { AiOutlineShopping, AiOutlineLogout } from "react-icons/ai";
+import { Popover, Transition } from "@headlessui/react";
 
 import { useUserContext } from "../../context/userContext";
 import { useCartContext } from "../../context/cartContext";
 import { Button, Cart } from "../index";
+import CartPopOver from "../PopOverCart/CartPopOver.component";
 
 const Navbar: React.FC = () => {
   const userCtx = useUserContext();
   const cartCtx = useCartContext();
   return (
     <div className="w-[100%] h-[70px] z-20 bg-white drop-shadow-lg fixed flex items-center top-0">
-      <div className="container mx-auto flex items-center justify-between ">
+      <div className="container mx-auto flex items-center justify-between relative ">
         <div className="flex items-center justify-center h-full">
           <Link to="/">
             <h1 className="text-3xl ml-5 md:ml-5 md:text-4xl font-bold text-slate-700">
@@ -57,17 +59,21 @@ const Navbar: React.FC = () => {
               </div>
             </div>
           )}
-          <div className=" relative cursor-pointer">
-            {/* <span className="w-[25px] h-[25px]  rounded-full bg-red-500 text-center text-white absolute right-[-15px] top-[-2px]">
-              1
-            </span> */}
-            <AiOutlineShopping size={35} onClick={cartCtx?.showCart} />
-          </div>
+          <CartPopOver />
         </div>
       </div>
-      {cartCtx?.show && <Cart />}
+      {/* {cartCtx?.show && <Cart />} */}
     </div>
   );
 };
 
 export default React.memo(Navbar);
+
+{
+  /* <div className=" relative cursor-pointer">
+ <span className="w-[25px] h-[25px]  rounded-full bg-red-500 text-center text-white absolute right-[-15px] top-[-2px]">
+  1
+</span> 
+<AiOutlineShopping size={35} onClick={cartCtx?.showCart} />
+</div> */
+}

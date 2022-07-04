@@ -21,11 +21,10 @@ const Category: React.FC<Props> = ({ category, title }) => {
     return getSpecificCategory(category);
   };
 
-  const { data, isLoading, status } = useQuery(
+  const { data, isLoading } = useQuery(
     ["getProductsCategory", category],
     getProducts
   );
-  console.log("Data", status);
 
   if (isLoading) {
     return (
