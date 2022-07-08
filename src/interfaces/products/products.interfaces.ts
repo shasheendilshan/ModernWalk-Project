@@ -26,10 +26,3 @@ export interface IProductsResponse{
     error:string| null
 }
 
-export interface ICartContext{
- 
-    show:boolean|null,
-    showCart:()=>void,
-    hideCart:()=>void,
-  
-  }

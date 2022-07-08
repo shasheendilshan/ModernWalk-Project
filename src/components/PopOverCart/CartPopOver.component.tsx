@@ -8,6 +8,7 @@ import {
 } from "react-icons/ai";
 import { useCartContext } from "../../context/cartContext";
 import { formatCurrency } from "../../utilities/formatCurancy";
+import { Button } from "../index";
 
 const CartPopOver = () => {
   const cartCtx = useCartContext();
@@ -17,9 +18,9 @@ const CartPopOver = () => {
       {({ open }) => (
         <>
           <Popover.Button className="outline-none relative">
-            {cartCtx.totalItems > 0 && (
+            {cartCtx?.getTotalItems() > 0 && (
               <span className="bg-red-500 p-2 h-[25px] w-[25px] rounded-full text-white flex items-center justify-center absolute top-[-10px] right-[-12px]">
-                {cartCtx.totalItems}
+                {cartCtx?.getTotalItems()}
               </span>
             )}
 
@@ -34,12 +35,14 @@ const CartPopOver = () => {
             leaveFrom="opacity-100 translate-y-0"
             leaveTo="opacity-0 translate-y-1"
           >
-            <Popover.Panel className="absolute top-14 right-0 translate-x-10 bg-white  shadow-2xl rounded-sm w-[400px] h-[100vh]">
-              <div className=" relative h-[90vh]">
+            <Popover.Panel className="absolute top-14 right-0  bg-white overflow-hidden shadow-card rounded-2xl w-[100vw] h-[calc(100vh-70px)] md:w-[400px] ">
+              <div className=" relative h-[80vh] overflow-y-auto">
                 <div className="w-full  text-center">
-                  <h2 className="p-3 text-xl">Cart items</h2>
+                  <div className="bg-slate-100">
+                    <h2 className="p-3 text-2xl font-semibold">Cart</h2>
+                  </div>
                 </div>
-                <div className="flex flex-col gap-1">
+                <div className="flex flex-col gap-1 pb-[80px]">
                   {cartCtx.cartItems?.map((product, index) => (
                     <div
                       className="flex shadow-md rounded-xl h-28 overflow-hidden p-3  mx-2"
@@ -95,27 +98,30 @@ const CartPopOver = () => {
                     </div>
                   ))}
                 </div>
-                <div className="w-full bg-slate-200 h-24 absolute bottom-0 right-0 ">
-                  <div className="flex w-full justify-between px-2">
-                    <div>
-                      <h2 className="text-xl font-bold">Total Items :</h2>
-                    </div>
-                    <div>
-                      <h2 className="text-xl font-bold">
-                        {cartCtx.totalItems}
-                      </h2>
-                    </div>
+              </div>
+              <div className="w-full h-32 absolute bottom-2 right-0 pt-2 bg-slate-100">
+                <div className="flex w-full justify-between px-4">
+                  <div>
+                    <h2 className="text-xl font-semibold">Total Items :</h2>
                   </div>
-                  <div className="flex w-full justify-between px-2">
-                    <div>
-                      <h2 className="text-xl font-bold">Total :</h2>
-                    </div>
-                    <div>
-                      <h2 className="text-xl font-bold">
-                        {formatCurrency(cartCtx.totalPrice)}
-                      </h2>
-                    </div>
+                  <div>
+                    <h2 className="text-xl font-bold text-blue-800">
+                      {cartCtx?.getTotalItems()}
+                    </h2>
                   </div>
+                </div>
+                <div className="flex w-full justify-between px-4">
+                  <div>
+                    <h2 className="text-xl font-semibold">Total :</h2>
+                  </div>
+                  <div>
+                    <h2 className="text-xl font-bold">
+                      {formatCurrency(cartCtx?.getTotalPrice())}
+                    </h2>
+                  </div>
+                </div>
+                <div className="flex w-full  px-4 mt-3">
+                  <Button name="Checkout" />
                 </div>
               </div>
             </Popover.Panel>

@@ -100,8 +100,8 @@ const SignIn: React.FC = () => {
   }, []);
 
   return (
-    <div className="mt-[70px]  min-h-screen flex flex-col item-center">
-      <div className="max-w-md w-full mx-auto mt-4 bg-white p-8 border border-gray-300">
+    <div className=" bg-slate-100 min-h-screen flex flex-col item-center justify-center">
+      <div className="max-w-md w-full mx-auto  ">
         <div className="max-w-md w-full mx-auto mb-5">
           <div className="text-3xl font-bold text-gray-800 mt-2 text-center">
             Sign In
@@ -136,8 +136,12 @@ const SignIn: React.FC = () => {
               validationErrors.find((item) => item.password)?.password
             }
           />
-
-          <div className="flex items-center justify-between">
+          <div className="flex items-center">
+            <p className="font-medium text-sm text-btn_primary_normal leading-[21px] font-quicksand cursor-pointer">
+              Forgot Password?
+            </p>
+          </div>
+          {/* <div className="flex items-center justify-between">
             <div className="flex items-center">
               <input
                 type="checkbox"
@@ -152,7 +156,7 @@ const SignIn: React.FC = () => {
             <p className="font-medium text-sm text-blue-500 cursor-pointer">
               Forgot Password?
             </p>
-          </div>
+          </div> */}
           <div className="flex items-center justify-center pt-4">
             <div className="flex items-center justify-center">
               <label htmlFor="" className="ml-2 text-sm text-gray-600">

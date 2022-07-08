@@ -15,8 +15,8 @@ export interface IResponse{
 }
 
 export interface IValidationProps{
-    firstName?: string;
-    lastName?: string;
-    email?: string;
-    password?: string;
+    firstName?: string,
+    lastName?: string,
+    email?: string,
+    password?: string,
 }

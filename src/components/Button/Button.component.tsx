@@ -1,17 +1,21 @@
 import React from "react";
+import style from "./Button.module.scss";
+
+type variants = "outlined" | "primary";
 
 type Prop = {
   name: string;
   disable?: boolean;
   onClick?: () => void;
+  variant?: variants;
 };
 
-const Button: React.FC<Prop> = ({ name, disable, onClick }) => {
+const Button: React.FC<Prop> = ({ name, disable, onClick, variant }) => {
   return (
     <button
       disabled={disable ? disable : false}
       onClick={onClick}
-      className="w-full py-2 px-4 bg-[#2BD9AF] hover:bg-[#27c39e]  rounded-3xl text-white font-bold disabled:bg-slate-400"
+      className={variant ? style[variant] : style["primary"]}
     >
       {name && name}
     </button>

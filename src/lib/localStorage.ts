@@ -1,6 +1,9 @@
 
 import { IUser } from '../interfaces/users/users.interfaces';
+import { ICartDetails } from "../interfaces/cart/cart.interfaces";
 
+
+// user details
 
 export const setUserInLocalStorage =(user:IUser)=>{
    localStorage.setItem('userDetails',JSON.stringify(user));
@@ -21,6 +24,7 @@ export const getUserFromLocalStorage =()=>{
     localStorage.removeItem('userDetails');
  }
 
+ // login remember me
 
  export const setRememberMe =(user:IUser)=>{
    localStorage.setItem('loginDetails',JSON.stringify(user));
@@ -39,5 +43,26 @@ export const getRememberMeDetails =()=>{
  }
  export const removeRememberMeDetails =()=>{
    localStorage.removeItem('loginDetails');
+}
+
+//cart details
+export const setCartInLocalStorage =(cartDetails:ICartDetails)=>{
+   localStorage.setItem('cartDetails',JSON.stringify(cartDetails));
+}
+
+export const getCartFromLocalStorage =()=>{
+   const cart:string|null= localStorage.getItem('cartDetails');
+  
+   if(cart){
+        const cartDetails:ICartDetails= JSON.parse(cart);
+    return cartDetails;
+   }else{
+       return null;
+   }
+   
+ }
+
+export const removeCartFromLocalStorage =()=>{
+   localStorage.removeItem('cartDetails');
 }
 

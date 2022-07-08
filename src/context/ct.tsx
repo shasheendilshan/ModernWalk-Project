@@ -20,17 +20,10 @@ type Props = {
 
 interface ICartContext {
   show: boolean;
-  showCart: () => void;
-  hideCart: () => void;
-  addProduct: (product: IProduct) => void;
   addProductToCart: (product: IProduct, quantity: number) => void;
   decreaseQuantity: (id: number) => void;
   removeProduct: (id: number) => void;
-  getTotalItems: () => number;
-  getTotalPrice: () => number;
   cartItems: cartItem[];
-  totalItems: number;
-  totalPrice: number;
 }
 
 export const CartContext = createContext({} as ICartContext);
@@ -206,19 +199,6 @@ const CartProvider = ({ children }: Props) => {
       totalPrice,
     };
   }, [show, cartItems, totalItems, totalPrice]);
-
-  // const data = {
-  //   show,
-  //   showCart,
-  //   hideCart,
-  //   cartItems,
-  //   addProduct,
-  //   decreaseQuantity,
-  //   removeProduct,
-  //   getTotalItems,
-  //   totalItems,
-  //   totalPrice,
-  // };
 
   return <CartContext.Provider value={data}>{children}</CartContext.Provider>;
 };

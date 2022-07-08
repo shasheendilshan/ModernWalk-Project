@@ -1,20 +1,28 @@
 import React from "react";
 
 import { IProduct } from "../../interfaces/products/products.interfaces";
-import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 import { formatCurrency } from "./../../utilities/formatCurancy";
 import { useCartContext } from "../../context/cartContext";
+import { useGlobalContext } from "../../context/globalStateContext";
 
 type Props = {
   product: IProduct;
 };
 
 const ProductCard: React.FC<Props> = ({ product }) => {
-  // console.log("productCard rendered");
   const cartCtx = useCartContext();
+  const globalCtx = useGlobalContext();
+
+  const cardClick = () => {
+    globalCtx.setProductDetails(product);
+    globalCtx.showModal(true);
+  };
 
   return (
-    <div className="h-full w-72 bg-white flex flex-col mx-auto items-center  rounded-lg drop-shadow-2xl pt-2 cursor-pointer scale-90 hover:scale-100 transition duration-300 ease-linear">
+    <div
+      className="h-full w-72 bg-white flex flex-col mx-auto items-center  rounded-lg drop-shadow-2xl pt-2 cursor-pointer scale-90 hover:scale-100 transition duration-300 ease-linear"
+      onClick={cardClick}
+    >
       <div className="w-full p-2 h-24 overflow-hidden">
         <h3 className="text-lg font-semibold text-center">
           {product.title.substring(0, 100)}
@@ -29,7 +37,7 @@ const ProductCard: React.FC<Props> = ({ product }) => {
       </div>
 
       <div
-        className={`h-48  w-full ${
+        className={`h-36  w-full ${
           product.category !== "men's clothing" ? "bg-secondary" : "bg-primary"
         }  rounded-lg p-3 flex flex-col items-center overflow-auto`}
       >
@@ -37,31 +45,18 @@ const ProductCard: React.FC<Props> = ({ product }) => {
           {/* RS {product.price} */}
           {formatCurrency(product.price)}
         </h3>
-        {/* <div className="flex items-center  w-28 justify-between">
-          <span
-            className="bg-blue-600 p-2 rounded-full active:brightness-125"
-            onClick={() => cartCtx.decrease(product.id)}
-          >
-            <AiOutlineMinus color="#fff" />
-          </span>
-          <p className="px-2 text-xl">{cartCtx.getItemQuantity(product.id)}</p>
-          <span
-            className="bg-blue-600 p-2 rounded-full  active:brightness-125"
-            onClick={() => cartCtx.increase(product.id)}
-          >
-            <AiOutlinePlus color="#fff" />
-          </span>
-        </div> */}
-        <button
+
+        {/* <button
           className="bg-blue-600 p-2 rounded-full my-1 text-white w-full font-bold shadow-md active:brightness-150"
           onClick={() => cartCtx.addProduct(product)}
         >
           Add to cart
-        </button>
-
-        <p className=" text-xs md:text-sm text-center text-zinc-900  text-ellipsis overflow-hidden py-2">
-          {product.description}
-        </p>
+        </button> */}
+        <div className="h-20 overflow-hidden py-2 w-full">
+          <p className=" text-xs md:text-sm text-center text-zinc-900  overflow-hidden py-2">
+            {product.description}
+          </p>
+        </div>
       </div>
     </div>
   );

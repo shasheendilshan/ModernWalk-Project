@@ -1,0 +1,12 @@
+
+.header{
+  @apply text-xl font-quicksand font-bold leading-6 text-text_main mt-6 px-[24px];
+  @apply flex flex-row items-center justify-between text-left;
+
+  span{
+    &:first-of-type{
+      @apply w-[350px] truncate;
+    }
+  }
+}
+
