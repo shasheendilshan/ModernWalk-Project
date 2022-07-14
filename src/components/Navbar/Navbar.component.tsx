@@ -1,33 +1,29 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { AiOutlineShopping, AiOutlineLogout } from "react-icons/ai";
-import { Popover, Transition } from "@headlessui/react";
+import { AiOutlineLogout } from "react-icons/ai";
 
 import { useUserContext } from "../../context/userContext";
-import { useCartContext } from "../../context/cartContext";
-import { Button, Cart } from "../index";
+import { Button } from "../index";
 import CartPopOver from "../PopOverCart/CartPopOver.component";
+import style from "./Navbar.module.scss";
 
 const Navbar: React.FC = () => {
   const userCtx = useUserContext();
-  const cartCtx = useCartContext();
   return (
-    <div className="w-[100%] h-[70px] z-20 bg-white drop-shadow-lg fixed flex items-center top-0">
-      <div className="container mx-auto flex items-center justify-between relative ">
-        <div className="flex items-center justify-center h-full">
+    <div className={style.mainContainer}>
+      <div className={style.navbar}>
+        <div className={style.header}>
           <Link to="/">
-            <h1 className="text-3xl ml-5 md:ml-5 md:text-4xl font-bold text-slate-700">
-              Modern Walk
-            </h1>
+            <h1>Modern Walk</h1>
           </Link>
         </div>
         <div className="items-center  h-full flex justify-end flex-1 space-x-3 mr-5  ">
           {!userCtx?.user ? (
-            <>
+            <div>
               <Link to="/sign-in">
                 <Button name="Sign in" />
               </Link>
-            </>
+            </div>
           ) : (
             <div className="flex lg:space-x-10 item-center">
               <div className="items-center px-2 group inline-block relative cursor-pointer">
@@ -62,18 +58,8 @@ const Navbar: React.FC = () => {
           <CartPopOver />
         </div>
       </div>
-      {/* {cartCtx?.show && <Cart />} */}
     </div>
   );
 };
 
 export default React.memo(Navbar);
-
-{
-  /* <div className=" relative cursor-pointer">
- <span className="w-[25px] h-[25px]  rounded-full bg-red-500 text-center text-white absolute right-[-15px] top-[-2px]">
-  1
-</span> 
-<AiOutlineShopping size={35} onClick={cartCtx?.showCart} />
-</div> */
-}

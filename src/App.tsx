@@ -1,8 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { Toaster } from "react-hot-toast";
-import { useState } from "react";
-import { Dialog } from "@headlessui/react";
 
 import { Navbar } from "./components";
 import { CartProvider } from "./context/cartContext";
@@ -14,8 +12,6 @@ import ProductModal from "./components/ProductModal/ProductModal.component";
 import { GlobalStateProvider } from "./context/globalStateContext";
 
 const App = () => {
-  let [isOpen, setIsOpen] = useState(true);
-
   return (
     <QueryProvider>
       <GlobalStateProvider>

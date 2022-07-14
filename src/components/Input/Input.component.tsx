@@ -1,4 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+
+import style from "./Input.module.scss";
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -13,32 +16,47 @@ const Input: React.FC<InputProps> = ({
   label,
   error,
 }) => {
-  console.log(`rendered ${name} component`);
-  return (
-    <div>
-      {label && (
-        <label
-          htmlFor=""
-          className="text-sm font-quicksand leading-[21px] text-text_primary block after:content-['*'] after:text-danger_red "
-        >
-          {label}
-        </label>
-      )}
+  const [show, setShow] = useState<boolean>(false);
 
-      <input
-        name={name}
-        type={type}
-        className={`w-full p-2 border rounded-[8px] text-md font-quicksand font-[400] leading-6 pt-[16px] pl-[12px] pb-[8px] ${
-          error ? "border-red-500" : "border-gray-300"
-        }  mt-1 focus:outline-none`}
-        onChange={onChange}
-        value={value}
-      />
-      {error && (
-        <p className="text-sm pt-[4px] text-red-500 font-quicksand font-[400] leading-[21px]">
-          {error}
-        </p>
+  const toggleShow = () => {
+    setShow((prev) => !prev);
+  };
+
+  return (
+    <div className={style.mainContainer}>
+      {label && <label htmlFor="">{label}</label>}
+
+      {type === "password" ? (
+        <div className={style.passwordContainer}>
+          <input
+            name={name}
+            type={show ? "text" : "password"}
+            className={`${error ? style.error : ""} ${style.password}`}
+            onChange={onChange}
+            value={value}
+          />
+          <span>
+            {show ? (
+              <AiFillEye size={28} color="#182132" onClick={toggleShow} />
+            ) : (
+              <AiFillEyeInvisible
+                size={28}
+                color="#182132"
+                onClick={toggleShow}
+              />
+            )}
+          </span>
+        </div>
+      ) : (
+        <input
+          name={name}
+          type={type}
+          className={`${error ? style.error : ""} ${style.password}`}
+          onChange={onChange}
+          value={value}
+        />
       )}
+      {error && <p>{error}</p>}
     </div>
   );
 };

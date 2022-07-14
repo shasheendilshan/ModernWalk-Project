@@ -7,6 +7,7 @@ import { validateSignUp } from "../../lib/helpers";
 import { createUser } from "../../services/users.services";
 import { IUser } from "../../interfaces/users/users.interfaces";
 import { IValidationProps } from "../../interfaces/global/global.interface";
+import style from "./SignUp.module.scss";
 
 const SignUp: React.FC = () => {
   const [firstName, setFirstName] = useState<string>("");
@@ -93,19 +94,19 @@ const SignUp: React.FC = () => {
   };
 
   return (
-    <div className="mt-[70px]  min-h-screen flex flex-col item-center">
-      <div className="max-w-md w-full mx-auto mt-4 bg-white p-8 border border-gray-300">
-        <div className="max-w-md w-full mx-auto mb-5">
-          <div className="text-3xl font-bold text-gray-800 mt-2 text-center">
+    <div className={style.mainContainer}>
+      <div className={style.formContainer}>
+        <div className={style.header}>
+          <h2 className="text-3xl font-bold text-gray-800 mt-2 text-center">
             Sign Up
-          </div>
+          </h2>
         </div>
         {error && (
           <div className="flex items-center justify-center py-1">
             <p className="text-red-500">{error}</p>
           </div>
         )}
-        <form onSubmit={(e) => handleSubmit(e)} className="space-y-4">
+        <form onSubmit={(e) => handleSubmit(e)}>
           <Input
             label="First Name"
             name="firstName"
@@ -122,7 +123,6 @@ const SignUp: React.FC = () => {
             label="Last Name"
             name="lastName"
             type="text"
-            className="w-full p-2 border border-gray-300 mt-1 rounded-sm focus:outline-none"
             onChange={handleLastName}
             value={lastName}
             error={
@@ -155,26 +155,21 @@ const SignUp: React.FC = () => {
             }
           />
 
-          <div className="flex items-center justify-center pt-4">
-            <div className="flex items-center justify-center">
-              <label htmlFor="" className="ml-2 text-sm text-gray-600">
-                Do you have an account?
-              </label>
-              <p
-                className="font-medium text-md text-blue-500 cursor-pointer ml-2"
-                onClick={() => {
-                  navigate("/sign-in");
-                }}
-              >
-                Sign in
-              </p>
-            </div>
-          </div>
-          <div className="container mx-auto flex justify-center">
+          <div className={style.loadingContainer}>
             <BallBeat color={"#2BD9AF"} loading={loading} />
           </div>
-          <div>
+          <div className={style.btnContainer}>
             <Button name="Sign Up" disable={loading} />
+          </div>
+          <div className={style.SignInLinkContainer}>
+            <label htmlFor="">Do you have an account?</label>
+            <p
+              onClick={() => {
+                navigate("/sign-in");
+              }}
+            >
+              Sign in
+            </p>
           </div>
         </form>
       </div>

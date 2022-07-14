@@ -13,6 +13,7 @@ import {
   getRememberMeDetails,
   removeRememberMeDetails,
 } from "../../lib/localStorage";
+import style from "./SignIn.module.scss";
 
 const SignIn: React.FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -100,19 +101,17 @@ const SignIn: React.FC = () => {
   }, []);
 
   return (
-    <div className=" bg-slate-100 min-h-screen flex flex-col item-center justify-center">
-      <div className="max-w-md w-full mx-auto  ">
-        <div className="max-w-md w-full mx-auto mb-5">
-          <div className="text-3xl font-bold text-gray-800 mt-2 text-center">
-            Sign In
-          </div>
+    <div className={style.mainContainer}>
+      <div className={style.loginFromContainer}>
+        <div className={style.header}>
+          <h2>Sign In</h2>
         </div>
         {error && (
-          <div className="flex items-center justify-center py-1">
-            <p className="text-red-500">{error}</p>
+          <div className={style.errorContainer}>
+            <p>{error}</p>
           </div>
         )}
-        <form onSubmit={(e) => handleSubmit(e)} className="space-y-4">
+        <form onSubmit={(e) => handleSubmit(e)} className={style.form}>
           <Input
             name="email"
             type="text"
@@ -136,47 +135,35 @@ const SignIn: React.FC = () => {
               validationErrors.find((item) => item.password)?.password
             }
           />
-          <div className="flex items-center">
-            <p className="font-medium text-sm text-btn_primary_normal leading-[21px] font-quicksand cursor-pointer">
-              Forgot Password?
-            </p>
+          <div className={style.forgotPassword}>
+            <p>Forgot Password?</p>
           </div>
-          {/* <div className="flex items-center justify-between">
-            <div className="flex items-center">
+
+          <div className={style.loadingContainer}>
+            <BallBeat color={"#2BD9AF"} loading={loading} />
+          </div>
+          <div className={style.bottomContainer}>
+            <div className={style.rememberMe}>
               <input
                 type="checkbox"
                 name="rememberMe"
                 onChange={handleRemember}
-                className="h-4 w-4 rounded "
               />
-              <label htmlFor="" className="ml-2 text-sm text-gray-600">
-                Remember me
-              </label>
+              <label htmlFor="">Remember me</label>
             </div>
-            <p className="font-medium text-sm text-blue-500 cursor-pointer">
-              Forgot Password?
+            <div className={style.LoginBtn}>
+              <Button name="Sign In" disable={loading} />
+            </div>
+          </div>
+          <div className={style.createAccount}>
+            <label htmlFor="">Not yet register?</label>
+            <p
+              onClick={() => {
+                navigate("/sign-up");
+              }}
+            >
+              Create an account.
             </p>
-          </div> */}
-          <div className="flex items-center justify-center pt-4">
-            <div className="flex items-center justify-center">
-              <label htmlFor="" className="ml-2 text-sm text-gray-600">
-                Not yet register?
-              </label>
-              <p
-                className="font-medium text-md ml-2 text-blue-500 cursor-pointer"
-                onClick={() => {
-                  navigate("/sign-up");
-                }}
-              >
-                Create an account.
-              </p>
-            </div>
-          </div>
-          <div className="container mx-auto flex justify-center">
-            <BallBeat color={"#2BD9AF"} loading={loading} />
-          </div>
-          <div>
-            <Button name="Sign In" disable={loading} />
           </div>
         </form>
       </div>

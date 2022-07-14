@@ -5,8 +5,8 @@ import { AiOutlineMinus, AiOutlinePlus, AiOutlineClose } from "react-icons/ai";
 import { Button } from "../index";
 import { useGlobalContext } from "../../context/globalStateContext";
 import { useCartContext } from "../../context/cartContext";
-import "./style.css";
-import styles from "./ProductModal.module.scss";
+import style from "./ProductModal.module.scss";
+import { formatCurrency } from "./../../utilities/formatCurancy";
 
 const ProductModal = () => {
   const globalCtx = useGlobalContext();
@@ -36,21 +36,10 @@ const ProductModal = () => {
         as="div"
         open={globalCtx.productModalState}
         onClose={closeModal}
-        className="relative z-20"
+        className={style.dialog}
       >
-        <Transition.Child
-          as={Fragment}
-          enter="ease-out duration-300"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="ease-in duration-300"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
-        >
-          <div className="fixed inset-0 bg-black bg-opacity-25" />
-        </Transition.Child>
-        <div className="fixed inset-0 overflow-y-auto">
-          <div className="flex min-h-full items-center justify-center p-4 text-center">
+        <div className={style.blurBackground}>
+          <div className={style.dialogPanelContainer}>
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -60,74 +49,54 @@ const ProductModal = () => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="relative bg-white  w-full max-w-md h-[550px] rounded-2xl">
-                <Dialog.Title className={styles.header}>
+              <Dialog.Panel className={style.dialogPanel}>
+                <Dialog.Title className={style.header}>
                   <span>{product?.title}</span>
                   <span
-                    className="flex items-center justify-center"
+                    className={style.closeIconContainer}
                     onClick={closeModal}
                   >
-                    <AiOutlineClose size={22} color="rgba(24, 33, 50, 0.3)" />
+                    <AiOutlineClose size={22} />
                   </span>
                 </Dialog.Title>
-                {/* <div className="absolute top-[10px] right-[8px]">
-                  <span
-                    className="flex items-center justify-center p-2"
-                    onClick={closeModal}
-                  >
-                    <AiOutlineClose size={22} color="rgba(24, 33, 50, 0.3)" />
-                  </span>
-                </div> */}
-                <div>
-                  <div className="w-full  mt-8 h-[350px] modal-panel ">
-                    <div className="h-36 w-36 mb-2 flex justify-center mx-auto">
-                      <img
-                        src={product?.image}
-                        alt="product"
-                        className="object-contain"
-                      />
-                    </div>
-                    <div className="flex items-center w-full px-36 py-3 justify-between  mb-4">
-                      <div
-                        className="bg-blue-600 p-3 rounded-md active:brightness-125 cursor-pointer"
-                        onClick={decrement}
-                      >
-                        <AiOutlineMinus color="#fff" />
-                      </div>
-                      <div className="px-2 text-xl">{count}</div>
-                      <div
-                        className="bg-blue-600 p-3 rounded-md  active:brightness-125 cursor-pointer"
-                        onClick={increment}
-                      >
-                        <AiOutlinePlus color="#fff" />
-                      </div>
-                    </div>
-                    <div className="text-justify px-3">
-                      <h3 className="text-md font-quicksand font-bold leading-8">
-                        Description :{" "}
-                      </h3>
-                      <p className="text-sm font-quicksand text-text_primary">
-                        {product?.description}
-                      </p>
-                    </div>
+
+                <div className={style.content}>
+                  <div className={style.productImage}>
+                    <img src={product?.image} alt="product" />
+                  </div>
+                  <h3>{product && formatCurrency(product?.price)}</h3>
+
+                  <div className={style.countContainer}>
+                    <span onClick={decrement}>
+                      <AiOutlineMinus color="#fff" />
+                    </span>
+                    <div className="px-2 text-xl">{count}</div>
+                    <span onClick={increment}>
+                      <AiOutlinePlus color="#fff" />
+                    </span>
+                  </div>
+
+                  <div className={style.description}>
+                    <h3>Description : </h3>
+                    <p>{product?.description}</p>
                   </div>
                 </div>
-                <div className="absolute w-full  py-3 max-w-md bottom-0 left-0">
-                  <div className="flex gap-2 px-6">
-                    <Button
-                      name="Cancel"
-                      variant="outlined"
-                      onClick={closeModal}
-                    />
-                    <Button
-                      name="Add To Cart"
-                      onClick={() => {
-                        if (product) {
-                          cartCtx.addProductToCart(product, count);
-                        }
-                      }}
-                    />
-                  </div>
+
+                <div className={style.bottomContainer}>
+                  <Button
+                    name="Cancel"
+                    variant="outlined"
+                    onClick={closeModal}
+                  />
+                  <Button
+                    name="Add To Cart"
+                    onClick={() => {
+                      if (product) {
+                        cartCtx.addProductToCart(product, count);
+                        closeModal();
+                      }
+                    }}
+                  />
                 </div>
               </Dialog.Panel>
             </Transition.Child>

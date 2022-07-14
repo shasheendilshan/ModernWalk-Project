@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  createContext,
-  useMemo,
-  useContext,
-  useEffect,
-} from "react";
+import React, { useState, createContext, useContext, useEffect } from "react";
 import toast from "react-hot-toast";
 
 import { IProduct } from "../interfaces/products/products.interfaces";
@@ -13,6 +7,7 @@ import {
   setCartInLocalStorage,
 } from "../lib/localStorage";
 import { cartItem } from "./../interfaces/cart/cart.interfaces";
+import { removeCartFromLocalStorage } from "./../lib/localStorage";
 
 type Props = {
   children: React.ReactNode;
@@ -28,6 +23,7 @@ interface ICartContext {
   removeProduct: (id: number) => void;
   getTotalItems: () => number;
   getTotalPrice: () => number;
+  clearCart: () => void;
   cartItems: cartItem[];
   totalItems: number;
   totalPrice: number;
@@ -75,6 +71,12 @@ const CartProvider = ({ children }: Props) => {
       total = total + prod.product.price * prod.quantity;
     });
     return total;
+  };
+
+  const clearCart = () => {
+    setCartItems([]);
+    removeCartFromLocalStorage();
+    toast.success("Clear Cart successfully !");
   };
 
   const addProduct = (product: IProduct) => {
@@ -190,35 +192,49 @@ const CartProvider = ({ children }: Props) => {
     }
   };
 
-  const data = useMemo(() => {
-    return {
-      show,
-      showCart,
-      hideCart,
-      cartItems,
-      addProduct,
-      addProductToCart,
-      decreaseQuantity,
-      removeProduct,
-      getTotalItems,
-      getTotalPrice,
-      totalItems,
-      totalPrice,
-    };
-  }, [show, cartItems, totalItems, totalPrice]);
-
-  // const data = {
+  // const data = useMemo(() => {
+  //   return {
+  //     show,
+  //     showCart,
+  //     hideCart,
+  //     cartItems,
+  //     addProduct,
+  //     addProductToCart,
+  //     decreaseQuantity,
+  //     removeProduct,
+  //     getTotalItems,
+  //     getTotalPrice,
+  //     clearCart,
+  //     totalItems,
+  //     totalPrice,
+  //   };
+  // }, [
   //   show,
-  //   showCart,
-  //   hideCart,
   //   cartItems,
-  //   addProduct,
-  //   decreaseQuantity,
-  //   removeProduct,
-  //   getTotalItems,
   //   totalItems,
   //   totalPrice,
-  // };
+  //   addProduct,
+  //   addProductToCart,
+  //   decreaseQuantity,
+  //   getTotalItems,
+  //   getTotalPrice,
+  // ]);
+
+  const data = {
+    show,
+    showCart,
+    hideCart,
+    cartItems,
+    addProduct,
+    addProductToCart,
+    decreaseQuantity,
+    removeProduct,
+    getTotalItems,
+    getTotalPrice,
+    clearCart,
+    totalItems,
+    totalPrice,
+  };
 
   return <CartContext.Provider value={data}>{children}</CartContext.Provider>;
 };
